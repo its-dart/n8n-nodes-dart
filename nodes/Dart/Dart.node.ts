@@ -1,0 +1,133 @@
+import { INodeProperties, NodeConnectionType, type INodeType, type INodeTypeDescription } from "n8n-workflow";
+import { N8NPropertiesBuilder, N8NPropertiesBuilderConfig, Override } from "@devlikeapro/n8n-openapi-node";
+import * as doc from "./openapi.json";
+
+const customDefaults: Override[] = [
+  // Fix order default and name
+  {
+    find: { default: "[\n  null\n]", displayName: "O", type: "json" },
+    replace: {
+      default: "",
+      displayName: "Order",
+    },
+  },
+  // Improve search name
+  {
+    find: { displayName: "S", type: "string" },
+    replace: { displayName: "Search" },
+  },
+  // Default to false
+  ...["in_trash", "is_completed"].map((name) => ({
+    find: { name },
+    replace: {
+      default: false,
+    },
+  })),
+  // Default to none and add min-max
+  ...["limit", "offset", "size"].map((name) => ({
+    find: { default: 0, name, type: "number" },
+    replace: {
+      default: ".",
+      typeOptions: {
+        minValue: 0,
+        maxValue: name === "limit" ? 200 : undefined,
+      },
+    },
+  })),
+];
+
+const config: N8NPropertiesBuilderConfig = {};
+const parser = new N8NPropertiesBuilder(doc, config);
+const properties = parser.build(customDefaults);
+
+const filteredProperties = properties.map((p) => {
+  // Remove Webhook as option
+  if (p.name === "resource") {
+    return { ...p, options: p.options?.filter((o) => o.name !== "Webhook") };
+  }
+  // Improve ID display name
+  if (p.displayName.includes("Id")) {
+    return { ...p, displayName: p.displayName.replace(/Id/g, "ID") };
+  }
+  return p;
+});
+
+// Transform non-required fields to optional
+const transformToOptional = (fields: INodeProperties[]): INodeProperties[] => {
+  const result: INodeProperties[] = [];
+  const groups = new Map<string, INodeProperties[]>();
+
+  fields.forEach((field) => {
+    const key = field.displayOptions?.show
+      ? `${field.displayOptions.show.resource?.[0]}::${field.displayOptions.show.operation?.[0]}`
+      : null;
+
+    if (!key || !field.displayOptions?.show?.resource?.[0] || !field.displayOptions?.show?.operation?.[0]) {
+      result.push(field);
+    } else {
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key)!.push(field);
+    }
+  });
+
+  groups.forEach((groupFields, key) => {
+    const [resource, operation] = key.split("::");
+    const required: INodeProperties[] = [];
+    const optional: INodeProperties[] = [];
+
+    groupFields.forEach((field) => {
+      if (field.type === "notice" || field.name === "operation") {
+        result.push(field);
+      } else if (field.required) {
+        required.push(field);
+      } else {
+        optional.push(field);
+      }
+    });
+
+    result.push(...required);
+
+    if (optional.length > 0) {
+      result.push({
+        displayName: "Filters",
+        name: "additionalFields",
+        type: "collection",
+        default: {},
+        placeholder: "Add Filter",
+        displayOptions: {
+          show: { resource: [resource], operation: [operation] },
+        },
+        options: optional.map((o) => ({ ...o, displayOptions: undefined })),
+      });
+    }
+  });
+
+  return result;
+};
+
+export class Dart implements INodeType {
+  description: INodeTypeDescription = {
+    displayName: "Dart",
+    name: "dart",
+    icon: "file:dart.svg",
+    group: ["transform"],
+    version: 1,
+    subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
+    description: "Dart streamlines project management so your team can get back to work that matters.",
+    defaults: {
+      name: "Dart",
+    },
+    usableAsTool: true,
+    inputs: [NodeConnectionType.Main],
+    outputs: [NodeConnectionType.Main],
+    credentials: [{ name: "dartApi", required: true }],
+    requestDefaults: {
+      baseURL: "={{$credentials.url}}",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    },
+    properties: transformToOptional(filteredProperties),
+  };
+}

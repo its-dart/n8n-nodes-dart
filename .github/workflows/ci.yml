@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Display Node version
+        run: node -v
+
+      - name: Cache dependencies
+        uses: actions/cache@v4.2.3
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Configure yarn
+        run: yarn config set ignore-engines true
+
+      - name: Install and check dependencies
+        run: |
+          yarn install
+          git diff --exit-code
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Spellcheck
+        run: yarn spellcheck
+
+      - name: Style check
+        run: yarn prettier-check
+
+      - name: Build
+        run: yarn build
