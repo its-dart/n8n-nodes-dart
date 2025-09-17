@@ -3,7 +3,7 @@ import type { IAuthenticateGeneric, ICredentialTestRequest, ICredentialType, INo
 export class DartApi implements ICredentialType {
   name = "dartApi";
   displayName = "Dart API";
-  documentationUrl = "https://help.dartai.com/en/articles/9558290-api-libraries-and-cli";
+  documentationUrl = "https://help.dartai.com/en/articles/12313191-n8n-node-setup";
   properties: INodeProperties[] = [
     {
       displayName: "Dart API URL",

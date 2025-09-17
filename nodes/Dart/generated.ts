@@ -965,7 +965,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "In Trash",
         name: "in_trash",
-        default: false,
+        default: true,
         type: "boolean",
         routing: {
           send: {
@@ -1557,7 +1557,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "In Trash",
         name: "in_trash",
-        default: false,
+        default: true,
         type: "boolean",
         routing: {
           send: {
@@ -1571,7 +1571,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Is Completed",
         name: "is_completed",
-        default: false,
+        default: true,
         type: "boolean",
         routing: {
           send: {

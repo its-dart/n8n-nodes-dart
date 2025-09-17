@@ -2,6 +2,7 @@
 
 import { INodeProperties } from "n8n-workflow";
 import { N8NPropertiesBuilder, N8NPropertiesBuilderConfig, Override } from "@devlikeapro/n8n-openapi-node";
+// eslint-disable-next-line import-x/no-unresolved
 import * as doc from "./openapi.json";
 
 const customDefaults: Override[] = [
@@ -18,20 +19,13 @@ const customDefaults: Override[] = [
     find: { displayName: "S", type: "string" },
     replace: { displayName: "Search" },
   },
-  // Default to false
-  ...["in_trash", "is_completed"].map((name) => ({
-    find: { name },
-    replace: {
-      default: false,
-    },
-  })),
   // Default to none and add min-max
   ...["limit", "offset", "size"].map((name) => ({
     find: { default: 0, name, type: "number" },
     replace: {
       default: ".",
       typeOptions: {
-        minValue: 0,
+        minValue: name === "limit" ? 1 : 0,
         maxValue: name === "limit" ? 200 : undefined,
       },
     },

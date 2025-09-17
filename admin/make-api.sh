@@ -25,8 +25,10 @@ curl -s "$DART_API_SCHEMA_URL" | yq -o json > "$API_OUTPUT_PATH"
 rm -f "$GENERATED_OUTPUT_PATH"
 echo "Processing API schema..."
 npx ts-node admin/processApi.ts > "$GENERATED_OUTPUT_PATH"
+rm -f "$API_OUTPUT_PATH"
 
 echo "Formatting, linting and re-formatting..."
+# We must format before linting, because it's picky and won't work
 yarn prettier-fix
 yarn lint-fix
 yarn prettier-fix
