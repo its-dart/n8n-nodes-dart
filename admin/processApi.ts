@@ -19,11 +19,10 @@ const customDefaults: Override[] = [
     find: { displayName: "S", type: "string" },
     replace: { displayName: "Search" },
   },
-  // Default to none and add min-max
+  // Add min-max
   ...["limit", "offset", "size"].map((name) => ({
     find: { default: 0, name, type: "number" },
     replace: {
-      default: ".",
       typeOptions: {
         minValue: name === "limit" ? 1 : 0,
         maxValue: name === "limit" ? 200 : undefined,
@@ -82,7 +81,7 @@ const transformToOptional = (fields: INodeProperties[]): INodeProperties[] => {
     groupFields.forEach((field) => {
       if (field.type === "notice" || field.name === "operation") {
         result.push(field);
-      } else if (field.required) {
+      } else if (field.required || field.name === "limit" || field.name === "offset") {
         required.push(field);
       } else {
         optional.push(field);

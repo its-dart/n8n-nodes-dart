@@ -492,6 +492,55 @@ export const properties: INodeProperties[] = [
     },
   },
   {
+    displayName: "Limit",
+    name: "limit",
+    description: "Max number of results to return",
+    default: 50,
+    type: "number",
+    routing: {
+      send: {
+        type: "query",
+        property: "limit",
+        value: "={{ $value }}",
+        propertyInDotNotation: false,
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Comment"],
+        operation: ["List Comments"],
+      },
+    },
+    typeOptions: {
+      minValue: 1,
+      maxValue: 200,
+    },
+  },
+  {
+    displayName: "Offset",
+    name: "offset",
+    description: "The initial index from which to return the results",
+    default: 0,
+    type: "number",
+    routing: {
+      send: {
+        type: "query",
+        property: "offset",
+        value: "={{ $value }}",
+        propertyInDotNotation: false,
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Comment"],
+        operation: ["List Comments"],
+      },
+    },
+    typeOptions: {
+      minValue: 0,
+    },
+  },
+  {
     displayName: "Task ID",
     name: "task_id",
     required: true,
@@ -566,43 +615,6 @@ export const properties: INodeProperties[] = [
             value: "={{ $value }}",
             propertyInDotNotation: false,
           },
-        },
-      },
-      {
-        displayName: "Limit",
-        name: "limit",
-        description: "Max number of results to return",
-        default: 50,
-        type: "number",
-        routing: {
-          send: {
-            type: "query",
-            property: "limit",
-            value: "={{ $value }}",
-            propertyInDotNotation: false,
-          },
-        },
-        typeOptions: {
-          minValue: 1,
-          maxValue: 200,
-        },
-      },
-      {
-        displayName: "Offset",
-        name: "offset",
-        description: "The initial index from which to return the results",
-        default: 0,
-        type: "number",
-        routing: {
-          send: {
-            type: "query",
-            property: "offset",
-            value: "={{ $value }}",
-            propertyInDotNotation: false,
-          },
-        },
-        typeOptions: {
-          minValue: 0,
         },
       },
       {
@@ -907,6 +919,55 @@ export const properties: INodeProperties[] = [
     },
   },
   {
+    displayName: "Limit",
+    name: "limit",
+    description: "Max number of results to return",
+    default: 50,
+    type: "number",
+    routing: {
+      send: {
+        type: "query",
+        property: "limit",
+        value: "={{ $value }}",
+        propertyInDotNotation: false,
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Doc"],
+        operation: ["List Docs"],
+      },
+    },
+    typeOptions: {
+      minValue: 1,
+      maxValue: 200,
+    },
+  },
+  {
+    displayName: "Offset",
+    name: "offset",
+    description: "The initial index from which to return the results",
+    default: 0,
+    type: "number",
+    routing: {
+      send: {
+        type: "query",
+        property: "offset",
+        value: "={{ $value }}",
+        propertyInDotNotation: false,
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Doc"],
+        operation: ["List Docs"],
+      },
+    },
+    typeOptions: {
+      minValue: 0,
+    },
+  },
+  {
     displayName: "Filters",
     name: "additionalFields",
     type: "collection",
@@ -974,43 +1035,6 @@ export const properties: INodeProperties[] = [
             value: "={{ $value }}",
             propertyInDotNotation: false,
           },
-        },
-      },
-      {
-        displayName: "Limit",
-        name: "limit",
-        description: "Max number of results to return",
-        default: 50,
-        type: "number",
-        routing: {
-          send: {
-            type: "query",
-            property: "limit",
-            value: "={{ $value }}",
-            propertyInDotNotation: false,
-          },
-        },
-        typeOptions: {
-          minValue: 1,
-          maxValue: 200,
-        },
-      },
-      {
-        displayName: "Offset",
-        name: "offset",
-        description: "The initial index from which to return the results",
-        default: 0,
-        type: "number",
-        routing: {
-          send: {
-            type: "query",
-            property: "offset",
-            value: "={{ $value }}",
-            propertyInDotNotation: false,
-          },
-        },
-        typeOptions: {
-          minValue: 0,
         },
       },
       {
@@ -1415,6 +1439,55 @@ export const properties: INodeProperties[] = [
     },
   },
   {
+    displayName: "Limit",
+    name: "limit",
+    description: "Max number of results to return",
+    default: 50,
+    type: "number",
+    routing: {
+      send: {
+        type: "query",
+        property: "limit",
+        value: "={{ $value }}",
+        propertyInDotNotation: false,
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Task"],
+        operation: ["List Tasks"],
+      },
+    },
+    typeOptions: {
+      minValue: 1,
+      maxValue: 200,
+    },
+  },
+  {
+    displayName: "Offset",
+    name: "offset",
+    description: "The initial index from which to return the results",
+    default: 0,
+    type: "number",
+    routing: {
+      send: {
+        type: "query",
+        property: "offset",
+        value: "={{ $value }}",
+        propertyInDotNotation: false,
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Task"],
+        operation: ["List Tasks"],
+      },
+    },
+    typeOptions: {
+      minValue: 0,
+    },
+  },
+  {
     displayName: "Filters",
     name: "additionalFields",
     type: "collection",
@@ -1580,43 +1653,6 @@ export const properties: INodeProperties[] = [
             value: "={{ $value }}",
             propertyInDotNotation: false,
           },
-        },
-      },
-      {
-        displayName: "Limit",
-        name: "limit",
-        description: "Max number of results to return",
-        default: 50,
-        type: "number",
-        routing: {
-          send: {
-            type: "query",
-            property: "limit",
-            value: "={{ $value }}",
-            propertyInDotNotation: false,
-          },
-        },
-        typeOptions: {
-          minValue: 1,
-          maxValue: 200,
-        },
-      },
-      {
-        displayName: "Offset",
-        name: "offset",
-        description: "The initial index from which to return the results",
-        default: 0,
-        type: "number",
-        routing: {
-          send: {
-            type: "query",
-            property: "offset",
-            value: "={{ $value }}",
-            propertyInDotNotation: false,
-          },
-        },
-        typeOptions: {
-          minValue: 0,
         },
       },
       {
