@@ -11,57 +11,47 @@ export const properties: INodeProperties[] = [
     noDataExpression: true,
     options: [
       {
+        name: "Attachment",
+        value: "Attachment",
+      },
+      {
         name: "Comment",
         value: "Comment",
-        description: "",
       },
       {
         name: "Config",
         value: "Config",
-        description: "",
       },
       {
         name: "Dartboard",
         value: "Dartboard",
-        description: "",
       },
       {
         name: "Doc",
         value: "Doc",
-        description: "",
       },
       {
         name: "Folder",
         value: "Folder",
-        description: "",
       },
       {
         name: "Help Center Article",
         value: "Help Center Article",
-        description: "",
       },
       {
         name: "Skill",
         value: "Skill",
-        description: "",
       },
       {
         name: "Task",
         value: "Task",
-        description: "",
-      },
-      {
-        name: "Attachment",
-        value: "Attachment",
-        description: "",
       },
       {
         name: "View",
         value: "View",
-        description: "",
       },
     ],
-    default: "",
+    default: "Attachment",
   },
   {
     displayName: "Operation",
@@ -90,7 +80,7 @@ export const properties: INodeProperties[] = [
       {
         name: "List Comments",
         value: "List Comments",
-        action: "List Comments",
+        action: "List comments",
         description:
           "List comments for a task with filtering options. Filter by author, text content, or date range. Sort by date or hierarchical thread order. Task ID required. Supports pagination.",
         routing: {
@@ -101,7 +91,7 @@ export const properties: INodeProperties[] = [
         },
       },
     ],
-    default: "",
+    default: "Add Task Comment",
   },
   {
     displayName: "Operation",
@@ -119,7 +109,7 @@ export const properties: INodeProperties[] = [
         value: "Get Config",
         action: "Get user space configuration",
         description:
-          "Get information about the user's space, including all of the possible values that can be provided to other endpoints.",
+          "Get information about the user's space, including all of the possible values that can be provided to other endpoints",
         routing: {
           request: {
             method: "GET",
@@ -128,7 +118,7 @@ export const properties: INodeProperties[] = [
         },
       },
     ],
-    default: "",
+    default: "Get Config",
   },
   {
     displayName: "Operation",
@@ -155,7 +145,7 @@ export const properties: INodeProperties[] = [
         },
       },
     ],
-    default: "",
+    default: "Get Dartboard",
   },
   {
     displayName: "Operation",
@@ -182,6 +172,19 @@ export const properties: INodeProperties[] = [
         },
       },
       {
+        name: "Delete Doc",
+        value: "Delete Doc",
+        action: "Delete an existing doc",
+        description:
+          "Move an existing doc to the trash, where it can be recovered if needed. Nothing else about the doc will be changed.",
+        routing: {
+          request: {
+            method: "DELETE",
+            url: '=/docs/{{$parameter["id"]}}',
+          },
+        },
+      },
+      {
         name: "Get Doc",
         value: "Get Doc",
         action: "Retrieve an existing doc",
@@ -191,6 +194,19 @@ export const properties: INodeProperties[] = [
           request: {
             method: "GET",
             url: '=/docs/{{$parameter["id"]}}',
+          },
+        },
+      },
+      {
+        name: "List Docs",
+        value: "List Docs",
+        action: "List docs",
+        description:
+          "List docs with filtering and search capabilities. Filter by folder, title, text content, or use full-text search. Sort by creation/update date or title. Supports pagination.",
+        routing: {
+          request: {
+            method: "GET",
+            url: "=/docs/list",
           },
         },
       },
@@ -207,34 +223,8 @@ export const properties: INodeProperties[] = [
           },
         },
       },
-      {
-        name: "Delete Doc",
-        value: "Delete Doc",
-        action: "Delete an existing doc",
-        description:
-          "Move an existing doc to the trash, where it can be recovered if needed. Nothing else about the doc will be changed.",
-        routing: {
-          request: {
-            method: "DELETE",
-            url: '=/docs/{{$parameter["id"]}}',
-          },
-        },
-      },
-      {
-        name: "List Docs",
-        value: "List Docs",
-        action: "List Docs",
-        description:
-          "List docs with filtering and search capabilities. Filter by folder, title, text content, or use full-text search. Sort by creation/update date or title. Supports pagination.",
-        routing: {
-          request: {
-            method: "GET",
-            url: "=/docs/list",
-          },
-        },
-      },
     ],
-    default: "",
+    default: "Create Doc",
   },
   {
     displayName: "Operation",
@@ -261,7 +251,7 @@ export const properties: INodeProperties[] = [
         },
       },
     ],
-    default: "",
+    default: "Get Folder",
   },
   {
     displayName: "Operation",
@@ -279,7 +269,7 @@ export const properties: INodeProperties[] = [
         value: "List Help Center Articles",
         action: "List help center articles by query",
         description:
-          "Search for up to two help center articles by their semantic similarity to a short (1-5 word) query.",
+          "Search for up to two help center articles by their semantic similarity to a short (1-5 word) query",
         routing: {
           request: {
             method: "GET",
@@ -288,7 +278,7 @@ export const properties: INodeProperties[] = [
         },
       },
     ],
-    default: "",
+    default: "List Help Center Articles",
   },
   {
     displayName: "Operation",
@@ -315,7 +305,7 @@ export const properties: INodeProperties[] = [
         },
       },
     ],
-    default: "",
+    default: "Retrieve Skill By Title",
   },
   {
     displayName: "Operation",
@@ -342,6 +332,19 @@ export const properties: INodeProperties[] = [
         },
       },
       {
+        name: "Delete Task",
+        value: "Delete Task",
+        action: "Delete an existing task",
+        description:
+          "Move an existing task to the trash, where it can be recovered if needed. Nothing else about the task will be changed.",
+        routing: {
+          request: {
+            method: "DELETE",
+            url: '=/tasks/{{$parameter["id"]}}',
+          },
+        },
+      },
+      {
         name: "Get Task",
         value: "Get Task",
         action: "Retrieve an existing task",
@@ -351,6 +354,19 @@ export const properties: INodeProperties[] = [
           request: {
             method: "GET",
             url: '=/tasks/{{$parameter["id"]}}',
+          },
+        },
+      },
+      {
+        name: "List Tasks",
+        value: "List Tasks",
+        action: "List tasks",
+        description:
+          "List tasks with powerful filtering options. Filter by dartboard, status, assignee, tags, priority, dates, completion state, view, and more. Supports pagination with limit/offset.",
+        routing: {
+          request: {
+            method: "GET",
+            url: "=/tasks/list",
           },
         },
       },
@@ -367,34 +383,8 @@ export const properties: INodeProperties[] = [
           },
         },
       },
-      {
-        name: "Delete Task",
-        value: "Delete Task",
-        action: "Delete an existing task",
-        description:
-          "Move an existing task to the trash, where it can be recovered if needed. Nothing else about the task will be changed.",
-        routing: {
-          request: {
-            method: "DELETE",
-            url: '=/tasks/{{$parameter["id"]}}',
-          },
-        },
-      },
-      {
-        name: "List Tasks",
-        value: "List Tasks",
-        action: "List Tasks",
-        description:
-          "List tasks with powerful filtering options. Filter by dartboard, status, assignee, tags, priority, dates, completion state, view, and more. Supports pagination with limit/offset.",
-        routing: {
-          request: {
-            method: "GET",
-            url: "=/tasks/list",
-          },
-        },
-      },
     ],
-    default: "",
+    default: "Create Task",
   },
   {
     displayName: "Operation",
@@ -421,7 +411,7 @@ export const properties: INodeProperties[] = [
         },
       },
     ],
-    default: "",
+    default: "Add Task Attachment From Url",
   },
   {
     displayName: "Operation",
@@ -448,7 +438,7 @@ export const properties: INodeProperties[] = [
         },
       },
     ],
-    default: "",
+    default: "Get View",
   },
   {
     displayName: "POST /comments",
@@ -466,8 +456,8 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    required: true,
     displayName: "Item",
+    required: true,
     name: "item",
     type: "json",
     default: "{}",
@@ -581,8 +571,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Limit",
         name: "limit",
-        description: "Number of results to return per page.",
-        default: ".",
+        description: "Max number of results to return",
+        default: 50,
         type: "number",
         routing: {
           send: {
@@ -593,31 +583,15 @@ export const properties: INodeProperties[] = [
           },
         },
         typeOptions: {
-          minValue: 0,
+          minValue: 1,
           maxValue: 200,
-        },
-      },
-      {
-        displayName: "Order",
-        name: "o",
-        description:
-          "Ordering\n\n* `published_at` - Published At\n* `-published_at` - Published At (descending)\n* `hierarchical` - Hierarchical",
-        default: "",
-        type: "json",
-        routing: {
-          send: {
-            type: "query",
-            property: "o",
-            value: "={{ $value }}",
-            propertyInDotNotation: false,
-          },
         },
       },
       {
         displayName: "Offset",
         name: "offset",
-        description: "The initial index from which to return the results.",
-        default: ".",
+        description: "The initial index from which to return the results",
+        default: 0,
         type: "number",
         routing: {
           send: {
@@ -629,6 +603,22 @@ export const properties: INodeProperties[] = [
         },
         typeOptions: {
           minValue: 0,
+        },
+      },
+      {
+        displayName: "Order",
+        name: "o",
+        description:
+          "Ordering * `published_at` - Published At * `-published_at` - Published At (descending) * `hierarchical` - Hierarchical",
+        default: "",
+        type: "json",
+        routing: {
+          send: {
+            type: "query",
+            property: "o",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
         },
       },
       {
@@ -733,7 +723,7 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    displayName: "GET /dartboards/{id}",
+    displayName: "GET /dartboards/{ID}",
     name: "operation",
     type: "notice",
     typeOptions: {
@@ -776,8 +766,8 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    required: true,
     displayName: "Item",
+    required: true,
     name: "item",
     type: "json",
     default: "{}",
@@ -797,7 +787,7 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    displayName: "GET /docs/{id}",
+    displayName: "GET /docs/{ID}",
     name: "operation",
     type: "notice",
     typeOptions: {
@@ -825,7 +815,7 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    displayName: "PUT /docs/{id}",
+    displayName: "PUT /docs/{ID}",
     name: "operation",
     type: "notice",
     typeOptions: {
@@ -853,8 +843,8 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    required: true,
     displayName: "Item",
+    required: true,
     name: "item",
     type: "json",
     default: "{}",
@@ -874,7 +864,7 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    displayName: "DELETE /docs/{id}",
+    displayName: "DELETE /docs/{ID}",
     name: "operation",
     type: "notice",
     typeOptions: {
@@ -989,8 +979,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Limit",
         name: "limit",
-        description: "Number of results to return per page.",
-        default: ".",
+        description: "Max number of results to return",
+        default: 50,
         type: "number",
         routing: {
           send: {
@@ -1001,31 +991,15 @@ export const properties: INodeProperties[] = [
           },
         },
         typeOptions: {
-          minValue: 0,
+          minValue: 1,
           maxValue: 200,
-        },
-      },
-      {
-        displayName: "Order",
-        name: "o",
-        description:
-          "Ordering\n\n* `order` - Order\n* `-order` - Order (descending)\n* `created_at` - Created at\n* `-created_at` - Created at (descending)\n* `updated_at` - Updated at\n* `-updated_at` - Updated at (descending)\n* `title` - Title\n* `-title` - Title (descending)",
-        default: "",
-        type: "json",
-        routing: {
-          send: {
-            type: "query",
-            property: "o",
-            value: "={{ $value }}",
-            propertyInDotNotation: false,
-          },
         },
       },
       {
         displayName: "Offset",
         name: "offset",
-        description: "The initial index from which to return the results.",
-        default: ".",
+        description: "The initial index from which to return the results",
+        default: 0,
         type: "number",
         routing: {
           send: {
@@ -1037,6 +1011,22 @@ export const properties: INodeProperties[] = [
         },
         typeOptions: {
           minValue: 0,
+        },
+      },
+      {
+        displayName: "Order",
+        name: "o",
+        description:
+          "Ordering * `order` - Order * `-order` - Order (descending) * `created_at` - Created at * `-created_at` - Created at (descending) * `updated_at` - Updated at * `-updated_at` - Updated at (descending) * `title` - Title * `-title` - Title (descending)",
+        default: "",
+        type: "json",
+        routing: {
+          send: {
+            type: "query",
+            property: "o",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
         },
       },
       {
@@ -1085,7 +1075,7 @@ export const properties: INodeProperties[] = [
     ],
   },
   {
-    displayName: "GET /folders/{id}",
+    displayName: "GET /folders/{ID}",
     name: "operation",
     type: "notice",
     typeOptions: {
@@ -1210,8 +1200,8 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    required: true,
     displayName: "Item",
+    required: true,
     name: "item",
     type: "json",
     default:
@@ -1232,7 +1222,7 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    displayName: "GET /tasks/{id}",
+    displayName: "GET /tasks/{ID}",
     name: "operation",
     type: "notice",
     typeOptions: {
@@ -1260,7 +1250,7 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    displayName: "PUT /tasks/{id}",
+    displayName: "PUT /tasks/{ID}",
     name: "operation",
     type: "notice",
     typeOptions: {
@@ -1288,8 +1278,8 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    required: true,
     displayName: "Item",
+    required: true,
     name: "item",
     type: "json",
     default:
@@ -1310,7 +1300,7 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    displayName: "DELETE /tasks/{id}",
+    displayName: "DELETE /tasks/{ID}",
     name: "operation",
     type: "notice",
     typeOptions: {
@@ -1338,7 +1328,7 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    displayName: "POST /tasks/{id}/attachments/from-url",
+    displayName: "POST /tasks/{ID}/attachments/from-url",
     name: "operation",
     type: "notice",
     typeOptions: {
@@ -1366,12 +1356,12 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    required: true,
     displayName: "Name",
+    required: true,
     name: "name",
     type: "string",
     default: "",
-    description: "The name of the file to upload.",
+    description: "The name of the file to upload",
     routing: {
       send: {
         property: "name",
@@ -1388,12 +1378,12 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    required: true,
     displayName: "Url",
+    required: true,
     name: "url",
     type: "string",
     default: "",
-    description: "The URL of the file to upload.",
+    description: "The URL of the file to upload",
     routing: {
       send: {
         property: "url",
@@ -1595,8 +1585,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Limit",
         name: "limit",
-        description: "Number of results to return per page.",
-        default: ".",
+        description: "Max number of results to return",
+        default: 50,
         type: "number",
         routing: {
           send: {
@@ -1607,15 +1597,15 @@ export const properties: INodeProperties[] = [
           },
         },
         typeOptions: {
-          minValue: 0,
+          minValue: 1,
           maxValue: 200,
         },
       },
       {
         displayName: "Offset",
         name: "offset",
-        description: "The initial index from which to return the results.",
-        default: ".",
+        description: "The initial index from which to return the results",
+        default: 0,
         type: "number",
         routing: {
           send: {
@@ -1660,7 +1650,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Size",
         name: "size",
-        default: ".",
+        default: 0,
         type: "number",
         routing: {
           send: {
@@ -1845,7 +1835,7 @@ export const properties: INodeProperties[] = [
     ],
   },
   {
-    displayName: "GET /views/{id}",
+    displayName: "GET /views/{ID}",
     name: "operation",
     type: "notice",
     typeOptions: {
