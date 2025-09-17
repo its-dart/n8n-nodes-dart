@@ -15,7 +15,15 @@ if ! command -v yq &> /dev/null; then
 fi
 
 DART_API_SCHEMA_URL="${DART_HOST:-https://app.dartai.com}/api/v0/public/schema/"
-OUTPUT_PATH="./nodes/Dart/openapi.json"
+API_OUTPUT_PATH="./nodes/Dart/openapi.json"
+GENERATED_OUTPUT_PATH="./nodes/Dart/generated.ts"
 
-rm -f "$OUTPUT_PATH"
-curl -s "$DART_API_SCHEMA_URL" | yq -o json > "$OUTPUT_PATH"
+rm -f "$API_OUTPUT_PATH"
+echo "Downloading API schema..."
+curl -s "$DART_API_SCHEMA_URL" | yq -o json > "$API_OUTPUT_PATH"
+
+rm -f "$GENERATED_OUTPUT_PATH"
+echo "Processing API schema..."
+npx ts-node admin/processApi.ts > "$GENERATED_OUTPUT_PATH"
+
+yarn prettier-fix
