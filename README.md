@@ -1,8 +1,8 @@
 <div align="center">
   <h1>Dart n8n Node</h1>
   <p>
-    <a href="https://npmjs.com/package/dart-tools"><img src="https://img.shields.io/npm/v/dart-tools" alt="NPM"></a>
-    <a href="LICENSE"><img src="https://img.shields.io/github/license/its-dart/dart-tools-ts" alt="License"></a>
+    <a href="https://www.npmjs.com/package/n8n-nodes-dart"><img src="https://img.shields.io/npm/v/n8n-nodes-dart" alt="NPM"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/github/license/its-dart/n8n-nodes-dart" alt="License"></a>
   </p>
 </div>
 
@@ -32,7 +32,7 @@ Uses Bearer token authentication with the Dart API. You'll need to:
 - [Web App](https://app.dartai.com/)
 - [Help Center](https://help.dartai.com/)
 - [Bugs and Features](https://app.dartai.com/p/r/JFyPnhL9En61)
-- [Library Source](https://github.com/its-dart/dart-tools-ts/)
+- [Library Source](https://github.com/its-dart/n8n-nodes-dart/)
 - [Chat on Discord](https://discord.gg/RExv8jEkSh)
 - Email us at [support@dartai.com](mailto:support@dartai.com)
 
