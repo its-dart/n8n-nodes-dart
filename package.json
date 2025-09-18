@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-dart",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "The Dart n8n node",
   "license": "MIT",
   "homepage": "https://dartai.com",
