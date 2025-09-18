@@ -20,7 +20,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 ## Credentials
 
-Uses Bearer token authentication with the Dart API. You'll need to:
+This node uses bearer token authentication with the Dart API. You'll need to:
 
 1. Sign up for a [Dart account](https://app.dartai.com)
 2. Get your API token from [your Dart profile](https://app.dartai.com/home?settings=account)

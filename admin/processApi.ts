@@ -5,7 +5,7 @@ import { N8NPropertiesBuilder, N8NPropertiesBuilderConfig, Override } from "@dev
 // eslint-disable-next-line import-x/no-unresolved
 import * as doc from "./openapi.json";
 
-const customDefaults: Override[] = [
+const CUSTOM_DEFAULTS: Override[] = [
   // Fix order default and name
   {
     find: { default: "[\n  null\n]", displayName: "O", type: "json" },
@@ -33,7 +33,7 @@ const customDefaults: Override[] = [
 
 const config: N8NPropertiesBuilderConfig = {};
 const parser = new N8NPropertiesBuilder(doc, config);
-const properties = parser.build(customDefaults).map((e) => {
+const properties = parser.build(CUSTOM_DEFAULTS).map((e) => {
   const { displayName, ...rest } = e;
   // Display name must be first
   const property = { displayName, ...rest };

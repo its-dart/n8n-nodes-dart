@@ -10,8 +10,8 @@
 
 1. Run `yarn install` to install the dependencies
 2. Run `yarn build` to build the library
-3. Change the `Dart API URL` in the `DartApi.credentials.ts` file to `http://localhost:5173/api/v0/public`
-4. Run `yarn dev` to start the development server
+3. Change the `Dart API URL` in the `DartApi.credentials.ts` file to `http://localhost:5100/api/v0/public`
+4. Run `yarn dev` to start the development n8n instance
 
 ## Sync API
 
