@@ -1,6 +1,7 @@
 #!/usr/bin/env ts-node
 
 import { INodeProperties } from "n8n-workflow";
+// eslint-disable-next-line import-x/no-unresolved
 import { N8NPropertiesBuilder, N8NPropertiesBuilderConfig, Override } from "@devlikeapro/n8n-openapi-node";
 // eslint-disable-next-line import-x/no-unresolved
 import * as doc from "./openapi.json";

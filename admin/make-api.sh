@@ -22,10 +22,16 @@ rm -f "$API_OUTPUT_PATH"
 echo "Downloading API schema..."
 curl -s "$DART_API_SCHEMA_URL" | yq -o json > "$API_OUTPUT_PATH"
 
+echo "Installing the converter..."
+yarn add @devlikeapro/n8n-openapi-node --latest --silent
+
 rm -f "$GENERATED_OUTPUT_PATH"
 echo "Processing API schema..."
 npx ts-node admin/processApi.ts > "$GENERATED_OUTPUT_PATH"
 rm -f "$API_OUTPUT_PATH"
+
+echo "Removing the converter..."
+yarn remove @devlikeapro/n8n-openapi-node --silent
 
 echo "Formatting, linting and re-formatting..."
 # We must format before linting, because it's picky and won't work
