@@ -7,6 +7,17 @@ import { N8NPropertiesBuilder, N8NPropertiesBuilderConfig, Override } from "@dev
 import * as doc from "./openapi.json";
 
 const CUSTOM_DEFAULTS: Override[] = [
+  // Fix missing type/default for user field in Add Task Time Tracking
+  {
+    find: {
+      name: "user",
+      displayName: "User",
+    },
+    replace: {
+      type: "string",
+      default: "",
+    },
+  },
   // Fix order default and name
   {
     find: { default: "[\n  null\n]", displayName: "O", type: "json" },

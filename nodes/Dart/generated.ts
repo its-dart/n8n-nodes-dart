@@ -1584,7 +1584,9 @@ export const properties: INodeProperties[] = [
     displayName: "User",
     required: true,
     name: "user",
-    description: "The name or email of the user to attribute the tracked time to or null to use the current user.",
+    type: "string",
+    default: "",
+    description: "The name or email of the user to attribute the tracked time to or null to use the current user",
     routing: {
       send: {
         property: "user",
