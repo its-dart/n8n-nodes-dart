@@ -319,6 +319,19 @@ export const properties: INodeProperties[] = [
     },
     options: [
       {
+        name: "Add Task Time Tracking",
+        value: "Add Task Time Tracking",
+        action: "Add a time tracking entry to a task",
+        description:
+          "Record an additional time tracking entry on a task and return the updated task with refreshed time tracking",
+        routing: {
+          request: {
+            method: "POST",
+            url: '=/tasks/{{$parameter["id"]}}/time-tracking',
+          },
+        },
+      },
+      {
         name: "Create Task",
         value: "Create Task",
         action: "Create a new task",
@@ -371,11 +384,24 @@ export const properties: INodeProperties[] = [
         },
       },
       {
+        name: "Move Task",
+        value: "Move Task",
+        action: "Move a task within its dartboard",
+        description:
+          "Move a task to a specific position within results sorted by the order field. Use afterTaskId to place the task after a specific task, or beforeTaskId to place it before one.",
+        routing: {
+          request: {
+            method: "POST",
+            url: '=/tasks/{{$parameter["id"]}}/move',
+          },
+        },
+      },
+      {
         name: "Update Task",
         value: "Update Task",
         action: "Update an existing task",
         description:
-          "Update certain properties of an existing task. This will save the task in Dart for later access, search, etc. Any properties that are not specified will not be changed.",
+          'Update properties of an existing task. For customProperties, use property NAME (not ID) as key. Get property names from workspace config. Example: {"customTextProperty": "Some text"}. Fields not provided are unchanged.',
         routing: {
           request: {
             method: "PUT",
@@ -384,7 +410,7 @@ export const properties: INodeProperties[] = [
         },
       },
     ],
-    default: "Create Task",
+    default: "Add Task Time Tracking",
   },
   {
     displayName: "Operation",
@@ -981,6 +1007,20 @@ export const properties: INodeProperties[] = [
     },
     options: [
       {
+        displayName: "Editor",
+        name: "editor",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "editor",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
         displayName: "Folder",
         name: "folder",
         default: "",
@@ -1038,10 +1078,26 @@ export const properties: INodeProperties[] = [
         },
       },
       {
+        displayName: "No Defaults",
+        name: "no_defaults",
+        description:
+          "Whether default filters and sorting are applied when false (default) or no defaults are applied when true. Explicit filters or sorting always override defaults.",
+        default: false,
+        type: "boolean",
+        routing: {
+          send: {
+            type: "query",
+            property: "no_defaults",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
         displayName: "Order",
         name: "o",
         description:
-          "Ordering * `order` - Order * `-order` - Order (descending) * `created_at` - Created at * `-created_at` - Created at (descending) * `updated_at` - Updated at * `-updated_at` - Updated at (descending) * `title` - Title * `-title` - Title (descending)",
+          "Ordering * `folder__order` - Folder order * `-folder__order` - Folder order (desc) * `order` - Order * `-order` - Order (desc) * `created_at` - Created * `-created_at` - Created (desc) * `updated_at` - Updated * `-updated_at` - Updated (desc) * `title` - Title * `-title` - Title (desc)",
         default: "",
         type: "json",
         routing: {
@@ -1307,7 +1363,7 @@ export const properties: INodeProperties[] = [
     name: "item",
     type: "json",
     default:
-      '{\n  "assignees": [\n    null\n  ],\n  "tags": [\n    null\n  ],\n  "customProperties": {\n    "customCheckboxProperty": true,\n    "customDatesProperty": "2025-05-10",\n    "customDatesPropertyWithRange": [\n      "2025-05-01",\n      "2025-05-30"\n    ],\n    "customMultiselectProperty": [\n      "frontend",\n      "bug"\n    ],\n    "customNumberPropertyWithIntegerFormat": 5,\n    "customNumberPropertyWithPercentageFormat": 75,\n    "customNumberPropertyWithDollarsFormat": 1500.5,\n    "customSelectProperty": "In Progress",\n    "customStatusProperty": "Blocked",\n    "customTextProperty": "This task requires additional review from the design team",\n    "customUserProperty": "john.doe@example.com",\n    "customMultipleUserProperty": [\n      "john.doe@example.com",\n      "Alice Smith"\n    ]\n  },\n  "taskRelationships": {\n    "subtaskIds": [\n      "abcdefghijk1",\n      "abcdefghijk2"\n    ],\n    "blockerIds": [\n      "abcdefghijk3"\n    ],\n    "blockingIds": [\n      "abcdefghijk4"\n    ],\n    "duplicateIds": [\n      "abcdefghijk5"\n    ],\n    "relatedIds": [\n      "abcdefghijk6",\n      "abcdefghijk7"\n    ]\n  }\n}',
+      '{\n  "parentId": {},\n  "assignees": [\n    null\n  ],\n  "tags": [\n    null\n  ],\n  "customProperties": {\n    "customCheckboxProperty": true,\n    "customDatesProperty": "2025-05-10",\n    "customDatesPropertyWithRange": [\n      "2025-05-01",\n      "2025-05-30"\n    ],\n    "customMultiselectProperty": [\n      "frontend",\n      "bug"\n    ],\n    "customNumberPropertyWithIntegerFormat": 5,\n    "customNumberPropertyWithPercentageFormat": 75,\n    "customNumberPropertyWithDollarsFormat": 1500.5,\n    "customSelectProperty": "In Progress",\n    "customStatusProperty": "Blocked",\n    "customTextProperty": "This task requires additional review from the design team",\n    "customUserProperty": "john.doe@example.com",\n    "customMultipleUserProperty": [\n      "john.doe@example.com",\n      "Alice Smith"\n    ]\n  },\n  "taskRelationships": {\n    "subtaskIds": [\n      "abcdefghijk1",\n      "abcdefghijk2"\n    ],\n    "blockerIds": [\n      "abcdefghijk3"\n    ],\n    "blockingIds": [\n      "abcdefghijk4"\n    ],\n    "duplicateIds": [\n      "abcdefghijk5"\n    ],\n    "relatedIds": [\n      "abcdefghijk6",\n      "abcdefghijk7"\n    ]\n  }\n}',
     routing: {
       send: {
         property: "item",
@@ -1424,6 +1480,171 @@ export const properties: INodeProperties[] = [
     },
   },
   {
+    displayName: "POST /tasks/{ID}/move",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Task"],
+        operation: ["Move Task"],
+      },
+    },
+  },
+  {
+    displayName: "ID",
+    name: "id",
+    required: true,
+    default: "",
+    type: "string",
+    displayOptions: {
+      show: {
+        resource: ["Task"],
+        operation: ["Move Task"],
+      },
+    },
+  },
+  {
+    displayName: "Filters",
+    name: "additionalFields",
+    type: "collection",
+    default: {},
+    placeholder: "Add Filter",
+    displayOptions: {
+      show: {
+        resource: ["Task"],
+        operation: ["Move Task"],
+      },
+    },
+    options: [
+      {
+        displayName: "After Task ID",
+        name: "afterTaskId",
+        type: "string",
+        default: "",
+        description: "The universal, unique ID of the task",
+        routing: {
+          send: {
+            property: "afterTaskId",
+            propertyInDotNotation: false,
+            type: "body",
+            value: "={{ $value }}",
+          },
+        },
+      },
+      {
+        displayName: "Before Task ID",
+        name: "beforeTaskId",
+        type: "string",
+        default: "",
+        description: "The universal, unique ID of the task",
+        routing: {
+          send: {
+            property: "beforeTaskId",
+            propertyInDotNotation: false,
+            type: "body",
+            value: "={{ $value }}",
+          },
+        },
+      },
+    ],
+  },
+  {
+    displayName: "POST /tasks/{ID}/time-tracking",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Task"],
+        operation: ["Add Task Time Tracking"],
+      },
+    },
+  },
+  {
+    displayName: "ID",
+    name: "id",
+    required: true,
+    default: "",
+    type: "string",
+    displayOptions: {
+      show: {
+        resource: ["Task"],
+        operation: ["Add Task Time Tracking"],
+      },
+    },
+  },
+  {
+    displayName: "User",
+    required: true,
+    name: "user",
+    description: "The name or email of the user to attribute the tracked time to or null to use the current user.",
+    routing: {
+      send: {
+        property: "user",
+        propertyInDotNotation: false,
+        type: "body",
+        value: "={{ $value }}",
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Task"],
+        operation: ["Add Task Time Tracking"],
+      },
+    },
+  },
+  {
+    displayName: "Started At",
+    required: true,
+    name: "startedAt",
+    type: "string",
+    default: "",
+    description: "The start timestamp for the tracked time entry in ISO 8601 format",
+    routing: {
+      send: {
+        property: "startedAt",
+        propertyInDotNotation: false,
+        type: "body",
+        value: "={{ $value }}",
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Task"],
+        operation: ["Add Task Time Tracking"],
+      },
+    },
+  },
+  {
+    displayName: "Finished At",
+    required: true,
+    name: "finishedAt",
+    type: "string",
+    default: "",
+    description: "The end timestamp for the tracked time entry in ISO 8601 format. Must be after the start time.",
+    routing: {
+      send: {
+        property: "finishedAt",
+        propertyInDotNotation: false,
+        type: "body",
+        value: "={{ $value }}",
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Task"],
+        operation: ["Add Task Time Tracking"],
+      },
+    },
+  },
+  {
     displayName: "GET /tasks/list",
     name: "operation",
     type: "notice",
@@ -1523,6 +1744,76 @@ export const properties: INodeProperties[] = [
           send: {
             type: "query",
             property: "assignee_id",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Created At",
+        name: "created_at",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "created_at",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Created At After",
+        name: "created_at_after",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "created_at_after",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Created At Before",
+        name: "created_at_before",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "created_at_before",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Created By",
+        name: "created_by",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "created_by",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Created By ID",
+        name: "created_by_id",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "created_by_id",
             value: "={{ $value }}",
             propertyInDotNotation: false,
           },
@@ -1650,6 +1941,38 @@ export const properties: INodeProperties[] = [
           send: {
             type: "query",
             property: "is_completed",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "No Defaults",
+        name: "no_defaults",
+        description:
+          "Whether default filters and sorting are applied when false (default) or no defaults are applied when true. Explicit filters or sorting always override defaults.",
+        default: false,
+        type: "boolean",
+        routing: {
+          send: {
+            type: "query",
+            property: "no_defaults",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Order",
+        name: "o",
+        description:
+          "Ordering * `dartboard__order` - Dartboard order * `-dartboard__order` - Dartboard order (desc) * `order` - Order * `-order` - Order (desc) * `created_at` - Created * `-created_at` - Created (desc) * `updated_at` - Updated * `-updated_at` - Updated (desc) * `title` - Title * `-title` - Title (desc)",
+        default: "",
+        type: "json",
+        routing: {
+          send: {
+            type: "query",
+            property: "o",
             value: "={{ $value }}",
             propertyInDotNotation: false,
           },
@@ -1835,6 +2158,76 @@ export const properties: INodeProperties[] = [
           send: {
             type: "query",
             property: "type_id",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Updated At",
+        name: "updated_at",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "updated_at",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Updated At After",
+        name: "updated_at_after",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "updated_at_after",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Updated At Before",
+        name: "updated_at_before",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "updated_at_before",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Updated By",
+        name: "updated_by",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "updated_by",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Updated By ID",
+        name: "updated_by_id",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "updated_by_id",
             value: "={{ $value }}",
             propertyInDotNotation: false,
           },
