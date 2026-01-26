@@ -1647,6 +1647,35 @@ export const properties: INodeProperties[] = [
     },
   },
   {
+    displayName: "Filters",
+    name: "additionalFields",
+    type: "collection",
+    default: {},
+    placeholder: "Add Filter",
+    displayOptions: {
+      show: {
+        resource: ["Task"],
+        operation: ["Add Task Time Tracking"],
+      },
+    },
+    options: [
+      {
+        displayName: "Custom Property Name",
+        name: "customPropertyName",
+        description:
+          "The time tracking custom property name listed in config customProperties. Must be a time tracking type. If omitted, defaults to the main time tracking property.",
+        routing: {
+          send: {
+            property: "customPropertyName",
+            propertyInDotNotation: false,
+            type: "body",
+            value: "={{ $value }}",
+          },
+        },
+      },
+    ],
+  },
+  {
     displayName: "GET /tasks/list",
     name: "operation",
     type: "notice",
