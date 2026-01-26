@@ -1,4 +1,4 @@
-import { NodeConnectionType, type INodeType, type INodeTypeDescription } from "n8n-workflow";
+import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from "n8n-workflow";
 import { properties } from "./generated";
 
 export class Dart implements INodeType {
@@ -14,8 +14,8 @@ export class Dart implements INodeType {
       name: "Dart",
     },
     usableAsTool: true,
-    inputs: [NodeConnectionType.Main],
-    outputs: [NodeConnectionType.Main],
+    inputs: [NodeConnectionTypes.Main],
+    outputs: [NodeConnectionTypes.Main],
     credentials: [{ name: "dartApi", required: true }],
     requestDefaults: {
       baseURL: "={{$credentials.url}}",

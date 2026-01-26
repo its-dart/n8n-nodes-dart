@@ -1662,6 +1662,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Custom Property Name",
         name: "customPropertyName",
+        type: "string",
+        default: "",
         description:
           "The time tracking custom property name listed in config customProperties. Must be a time tracking type. If omitted, defaults to the main time tracking property.",
         routing: {
