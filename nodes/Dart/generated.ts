@@ -11,6 +11,10 @@ export const properties: INodeProperties[] = [
     noDataExpression: true,
     options: [
       {
+        name: "Agent",
+        value: "Agent",
+      },
+      {
         name: "Attachment",
         value: "Attachment",
       },
@@ -51,7 +55,84 @@ export const properties: INodeProperties[] = [
         value: "View",
       },
     ],
-    default: "Attachment",
+    default: "Agent",
+  },
+  {
+    displayName: "Operation",
+    name: "operation",
+    type: "options",
+    noDataExpression: true,
+    displayOptions: {
+      show: {
+        resource: ["Agent"],
+      },
+    },
+    options: [
+      {
+        name: "Create Agent",
+        value: "Create Agent",
+        action: "Create a new custom agent",
+        description: "Create a new custom agent in the workspace with a name and optional description or instructions",
+        routing: {
+          request: {
+            method: "POST",
+            url: "=/agents",
+          },
+        },
+      },
+      {
+        name: "Delete Agent",
+        value: "Delete Agent",
+        action: "Delete a custom agent",
+        description: "Delete a custom agent by its ID",
+        routing: {
+          request: {
+            method: "DELETE",
+            url: '=/agents/{{$parameter["id"]}}',
+          },
+        },
+      },
+      {
+        name: "Get Agent",
+        value: "Get Agent",
+        action: "Retrieve an existing custom agent",
+        description:
+          "Retrieve an existing custom agent by its ID, including its name and current description or instructions",
+        routing: {
+          request: {
+            method: "GET",
+            url: '=/agents/{{$parameter["id"]}}',
+          },
+        },
+      },
+      {
+        name: "List Agents",
+        value: "List Agents",
+        action: "List all custom agents",
+        description:
+          "List all custom agents in the workspace. Agents are AI assistants that can be assigned tasks and have customizable instructions.",
+        routing: {
+          request: {
+            method: "GET",
+            url: "=/agents/list",
+          },
+        },
+      },
+      {
+        name: "Update Agent",
+        value: "Update Agent",
+        action: "Update a custom agent",
+        description:
+          "Update a custom agent's name and/or description. Only the fields provided will be changed. The agent is identified by its ID in the URL.",
+        routing: {
+          request: {
+            method: "PUT",
+            url: '=/agents/{{$parameter["id"]}}',
+          },
+        },
+      },
+    ],
+    default: "Create Agent",
   },
   {
     displayName: "Operation",
@@ -292,6 +373,56 @@ export const properties: INodeProperties[] = [
     },
     options: [
       {
+        name: "Create Skill",
+        value: "Create Skill",
+        action: "Create a new skill",
+        description:
+          "Create a new custom skill with a title and instructions in markdown. The skill will be available to all workspace members.",
+        routing: {
+          request: {
+            method: "POST",
+            url: "=/skills",
+          },
+        },
+      },
+      {
+        name: "Delete Skill",
+        value: "Delete Skill",
+        action: "Delete an existing skill",
+        description: "Delete a skill by its ID. The skill will be permanently removed from the workspace.",
+        routing: {
+          request: {
+            method: "DELETE",
+            url: '=/skills/{{$parameter["id"]}}',
+          },
+        },
+      },
+      {
+        name: "Get Skill",
+        value: "Get Skill",
+        action: "Retrieve an existing skill",
+        description: "Retrieve an existing skill by its ID. Returns the skill's title and instructions.",
+        routing: {
+          request: {
+            method: "GET",
+            url: '=/skills/{{$parameter["id"]}}',
+          },
+        },
+      },
+      {
+        name: "List Skills",
+        value: "List Skills",
+        action: "List all skills",
+        description:
+          "List all skills in the workspace. Skills are user-defined instructions or templates for performing specific task types.",
+        routing: {
+          request: {
+            method: "GET",
+            url: "=/skills/list",
+          },
+        },
+      },
+      {
         name: "Retrieve Skill By Title",
         value: "Retrieve Skill By Title",
         action: "Retrieve a skill by title",
@@ -304,8 +435,21 @@ export const properties: INodeProperties[] = [
           },
         },
       },
+      {
+        name: "Update Skill",
+        value: "Update Skill",
+        action: "Update an existing skill",
+        description:
+          "Update an existing skill's title and/or instructions. Only the fields provided will be updated. The skill is identified by its ID in the URL.",
+        routing: {
+          request: {
+            method: "PUT",
+            url: '=/skills/{{$parameter["id"]}}',
+          },
+        },
+      },
     ],
-    default: "Retrieve Skill By Title",
+    default: "Create Skill",
   },
   {
     displayName: "Operation",
@@ -465,6 +609,211 @@ export const properties: INodeProperties[] = [
       },
     ],
     default: "Get View",
+  },
+  {
+    displayName: "POST /agents",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Agent"],
+        operation: ["Create Agent"],
+      },
+    },
+  },
+  {
+    displayName: "Item",
+    required: true,
+    name: "item",
+    type: "json",
+    default: "{}",
+    routing: {
+      send: {
+        property: "item",
+        propertyInDotNotation: false,
+        type: "body",
+        value: "={{ JSON.parse($value) }}",
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Agent"],
+        operation: ["Create Agent"],
+      },
+    },
+  },
+  {
+    displayName: "GET /agents/{ID}",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Agent"],
+        operation: ["Get Agent"],
+      },
+    },
+  },
+  {
+    displayName: "ID",
+    name: "id",
+    required: true,
+    default: "",
+    type: "string",
+    displayOptions: {
+      show: {
+        resource: ["Agent"],
+        operation: ["Get Agent"],
+      },
+    },
+  },
+  {
+    displayName: "PUT /agents/{ID}",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Agent"],
+        operation: ["Update Agent"],
+      },
+    },
+  },
+  {
+    displayName: "ID",
+    name: "id",
+    required: true,
+    default: "",
+    type: "string",
+    displayOptions: {
+      show: {
+        resource: ["Agent"],
+        operation: ["Update Agent"],
+      },
+    },
+  },
+  {
+    displayName: "Item",
+    required: true,
+    name: "item",
+    type: "json",
+    default: "{}",
+    routing: {
+      send: {
+        property: "item",
+        propertyInDotNotation: false,
+        type: "body",
+        value: "={{ JSON.parse($value) }}",
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Agent"],
+        operation: ["Update Agent"],
+      },
+    },
+  },
+  {
+    displayName: "DELETE /agents/{ID}",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Agent"],
+        operation: ["Delete Agent"],
+      },
+    },
+  },
+  {
+    displayName: "ID",
+    name: "id",
+    required: true,
+    default: "",
+    type: "string",
+    displayOptions: {
+      show: {
+        resource: ["Agent"],
+        operation: ["Delete Agent"],
+      },
+    },
+  },
+  {
+    displayName: "GET /agents/list",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Agent"],
+        operation: ["List Agents"],
+      },
+    },
+  },
+  {
+    displayName: "Limit",
+    name: "limit",
+    description: "Max number of results to return",
+    default: 50,
+    type: "number",
+    routing: {
+      send: {
+        type: "query",
+        property: "limit",
+        value: "={{ $value }}",
+        propertyInDotNotation: false,
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Agent"],
+        operation: ["List Agents"],
+      },
+    },
+    typeOptions: {
+      minValue: 1,
+      maxValue: 200,
+    },
+  },
+  {
+    displayName: "Offset",
+    name: "offset",
+    description: "The initial index from which to return the results",
+    default: 0,
+    type: "number",
+    routing: {
+      send: {
+        type: "query",
+        property: "offset",
+        value: "={{ $value }}",
+        propertyInDotNotation: false,
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Agent"],
+        operation: ["List Agents"],
+      },
+    },
+    typeOptions: {
+      minValue: 0,
+    },
   },
   {
     displayName: "POST /comments",
@@ -1228,6 +1577,147 @@ export const properties: INodeProperties[] = [
     ],
   },
   {
+    displayName: "POST /skills",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Skill"],
+        operation: ["Create Skill"],
+      },
+    },
+  },
+  {
+    displayName: "Item",
+    required: true,
+    name: "item",
+    type: "json",
+    default: "{}",
+    routing: {
+      send: {
+        property: "item",
+        propertyInDotNotation: false,
+        type: "body",
+        value: "={{ JSON.parse($value) }}",
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Skill"],
+        operation: ["Create Skill"],
+      },
+    },
+  },
+  {
+    displayName: "GET /skills/{ID}",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Skill"],
+        operation: ["Get Skill"],
+      },
+    },
+  },
+  {
+    displayName: "ID",
+    name: "id",
+    required: true,
+    default: "",
+    type: "string",
+    displayOptions: {
+      show: {
+        resource: ["Skill"],
+        operation: ["Get Skill"],
+      },
+    },
+  },
+  {
+    displayName: "PUT /skills/{ID}",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Skill"],
+        operation: ["Update Skill"],
+      },
+    },
+  },
+  {
+    displayName: "ID",
+    name: "id",
+    required: true,
+    default: "",
+    type: "string",
+    displayOptions: {
+      show: {
+        resource: ["Skill"],
+        operation: ["Update Skill"],
+      },
+    },
+  },
+  {
+    displayName: "Item",
+    required: true,
+    name: "item",
+    type: "json",
+    default: "{}",
+    routing: {
+      send: {
+        property: "item",
+        propertyInDotNotation: false,
+        type: "body",
+        value: "={{ JSON.parse($value) }}",
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Skill"],
+        operation: ["Update Skill"],
+      },
+    },
+  },
+  {
+    displayName: "DELETE /skills/{ID}",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Skill"],
+        operation: ["Delete Skill"],
+      },
+    },
+  },
+  {
+    displayName: "ID",
+    name: "id",
+    required: true,
+    default: "",
+    type: "string",
+    displayOptions: {
+      show: {
+        resource: ["Skill"],
+        operation: ["Delete Skill"],
+      },
+    },
+  },
+  {
     displayName: "GET /skills/by-title",
     name: "operation",
     type: "notice",
@@ -1262,6 +1752,70 @@ export const properties: INodeProperties[] = [
         resource: ["Skill"],
         operation: ["Retrieve Skill By Title"],
       },
+    },
+  },
+  {
+    displayName: "GET /skills/list",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Skill"],
+        operation: ["List Skills"],
+      },
+    },
+  },
+  {
+    displayName: "Limit",
+    name: "limit",
+    description: "Max number of results to return",
+    default: 50,
+    type: "number",
+    routing: {
+      send: {
+        type: "query",
+        property: "limit",
+        value: "={{ $value }}",
+        propertyInDotNotation: false,
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Skill"],
+        operation: ["List Skills"],
+      },
+    },
+    typeOptions: {
+      minValue: 1,
+      maxValue: 200,
+    },
+  },
+  {
+    displayName: "Offset",
+    name: "offset",
+    description: "The initial index from which to return the results",
+    default: 0,
+    type: "number",
+    routing: {
+      send: {
+        type: "query",
+        property: "offset",
+        value: "={{ $value }}",
+        propertyInDotNotation: false,
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Skill"],
+        operation: ["List Skills"],
+      },
+    },
+    typeOptions: {
+      minValue: 0,
     },
   },
   {
