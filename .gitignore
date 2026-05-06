@@ -134,3 +134,5 @@ dist
 
 # OpenAPI schema
 openapi.json
+
+CHANGELOG.md

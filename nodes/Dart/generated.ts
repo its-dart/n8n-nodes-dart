@@ -71,8 +71,8 @@ export const properties: INodeProperties[] = [
       {
         name: "Create Agent",
         value: "Create Agent",
-        action: "Create a new custom agent",
-        description: "Create a new custom agent in the workspace with a name and optional description or instructions",
+        action: "Create a new agent",
+        description: "Create a new agent in the workspace with a name and optional description or instructions",
         routing: {
           request: {
             method: "POST",
@@ -83,8 +83,8 @@ export const properties: INodeProperties[] = [
       {
         name: "Delete Agent",
         value: "Delete Agent",
-        action: "Delete a custom agent",
-        description: "Delete a custom agent by its ID",
+        action: "Delete an agent",
+        description: "Delete an agent by its ID",
         routing: {
           request: {
             method: "DELETE",
@@ -95,9 +95,8 @@ export const properties: INodeProperties[] = [
       {
         name: "Get Agent",
         value: "Get Agent",
-        action: "Retrieve an existing custom agent",
-        description:
-          "Retrieve an existing custom agent by its ID, including its name and current description or instructions",
+        action: "Retrieve an existing agent",
+        description: "Retrieve an existing agent by its ID, including its name and current description or instructions",
         routing: {
           request: {
             method: "GET",
@@ -108,9 +107,9 @@ export const properties: INodeProperties[] = [
       {
         name: "List Agents",
         value: "List Agents",
-        action: "List all custom agents",
+        action: "List all agents",
         description:
-          "List all custom agents in the workspace. Agents are AI assistants that can be assigned tasks and have customizable instructions.",
+          "List all agents in the workspace. Agents are AI assistants that can be assigned tasks and have customizable instructions.",
         routing: {
           request: {
             method: "GET",
@@ -121,9 +120,9 @@ export const properties: INodeProperties[] = [
       {
         name: "Update Agent",
         value: "Update Agent",
-        action: "Update a custom agent",
+        action: "Update an agent",
         description:
-          "Update a custom agent's name and/or description. Only the fields provided will be changed. The agent is identified by its ID in the URL.",
+          "Update an agent's name and/or description. Only the fields provided will be changed. The agent is identified by its ID in the URL.",
         routing: {
           request: {
             method: "PUT",
@@ -609,6 +608,80 @@ export const properties: INodeProperties[] = [
       },
     ],
     default: "Get View",
+  },
+  {
+    displayName: "Operation",
+    name: "operation",
+    type: "options",
+    noDataExpression: true,
+    displayOptions: {
+      show: {
+        resource: ["Webhook"],
+      },
+    },
+    options: [
+      {
+        name: "Create Webhook",
+        value: "Create Webhook",
+        action: "Create a new webhook",
+        description: "Create a new webhook that sends selected workspace events to a URL",
+        routing: {
+          request: {
+            method: "POST",
+            url: "=/webhooks",
+          },
+        },
+      },
+      {
+        name: "Delete Webhook",
+        value: "Delete Webhook",
+        action: "Delete an existing webhook",
+        description: "Delete a webhook by its ID",
+        routing: {
+          request: {
+            method: "DELETE",
+            url: '=/webhooks/{{$parameter["id"]}}',
+          },
+        },
+      },
+      {
+        name: "Get Webhook",
+        value: "Get Webhook",
+        action: "Retrieve an existing webhook",
+        description: "Retrieve an existing webhook by its ID",
+        routing: {
+          request: {
+            method: "GET",
+            url: '=/webhooks/{{$parameter["id"]}}',
+          },
+        },
+      },
+      {
+        name: "List Webhooks",
+        value: "List Webhooks",
+        action: "List all webhooks",
+        description: "List all webhooks in the workspace",
+        routing: {
+          request: {
+            method: "GET",
+            url: "=/webhooks/list",
+          },
+        },
+      },
+      {
+        name: "Update Webhook",
+        value: "Update Webhook",
+        action: "Update an existing webhook",
+        description: "Update an existing webhook. Only the fields provided will be updated.",
+        routing: {
+          request: {
+            method: "PUT",
+            url: '=/webhooks/{{$parameter["id"]}}',
+          },
+        },
+      },
+    ],
+    default: "Create Webhook",
   },
   {
     displayName: "POST /agents",
@@ -2337,6 +2410,48 @@ export const properties: INodeProperties[] = [
         },
       },
       {
+        displayName: "Completed At",
+        name: "completed_at",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "completed_at",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Completed At After",
+        name: "completed_at_after",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "completed_at_after",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Completed At Before",
+        name: "completed_at_before",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "completed_at_before",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
         displayName: "Created At",
         name: "created_at",
         default: "",
@@ -2553,7 +2668,7 @@ export const properties: INodeProperties[] = [
         displayName: "Order",
         name: "o",
         description:
-          "Ordering * `dartboard__order` - Dartboard order * `-dartboard__order` - Dartboard order (desc) * `order` - Order * `-order` - Order (desc) * `created_at` - Created * `-created_at` - Created (desc) * `updated_at` - Updated * `-updated_at` - Updated (desc) * `title` - Title * `-title` - Title (desc)",
+          "Ordering * `dartboard__order` - Dartboard order * `-dartboard__order` - Dartboard order (desc) * `order` - Order * `-order` - Order (desc) * `created_at` - Created * `-created_at` - Created (desc) * `updated_at` - Updated * `-updated_at` - Updated (desc) * `completed_at` - Completed * `-completed_at` - Completed (desc) * `title` - Title * `-title` - Title (desc)",
         default: "",
         type: "json",
         routing: {
@@ -2876,6 +2991,211 @@ export const properties: INodeProperties[] = [
         resource: ["View"],
         operation: ["Get View"],
       },
+    },
+  },
+  {
+    displayName: "POST /webhooks",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Webhook"],
+        operation: ["Create Webhook"],
+      },
+    },
+  },
+  {
+    displayName: "Item",
+    required: true,
+    name: "item",
+    type: "json",
+    default: '{\n  "eventKinds": [\n    null\n  ]\n}',
+    routing: {
+      send: {
+        property: "item",
+        propertyInDotNotation: false,
+        type: "body",
+        value: "={{ JSON.parse($value) }}",
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Webhook"],
+        operation: ["Create Webhook"],
+      },
+    },
+  },
+  {
+    displayName: "GET /webhooks/{ID}",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Webhook"],
+        operation: ["Get Webhook"],
+      },
+    },
+  },
+  {
+    displayName: "ID",
+    name: "id",
+    required: true,
+    default: "",
+    type: "string",
+    displayOptions: {
+      show: {
+        resource: ["Webhook"],
+        operation: ["Get Webhook"],
+      },
+    },
+  },
+  {
+    displayName: "PUT /webhooks/{ID}",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Webhook"],
+        operation: ["Update Webhook"],
+      },
+    },
+  },
+  {
+    displayName: "ID",
+    name: "id",
+    required: true,
+    default: "",
+    type: "string",
+    displayOptions: {
+      show: {
+        resource: ["Webhook"],
+        operation: ["Update Webhook"],
+      },
+    },
+  },
+  {
+    displayName: "Item",
+    required: true,
+    name: "item",
+    type: "json",
+    default: '{\n  "eventKinds": [\n    null\n  ]\n}',
+    routing: {
+      send: {
+        property: "item",
+        propertyInDotNotation: false,
+        type: "body",
+        value: "={{ JSON.parse($value) }}",
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Webhook"],
+        operation: ["Update Webhook"],
+      },
+    },
+  },
+  {
+    displayName: "DELETE /webhooks/{ID}",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Webhook"],
+        operation: ["Delete Webhook"],
+      },
+    },
+  },
+  {
+    displayName: "ID",
+    name: "id",
+    required: true,
+    default: "",
+    type: "string",
+    displayOptions: {
+      show: {
+        resource: ["Webhook"],
+        operation: ["Delete Webhook"],
+      },
+    },
+  },
+  {
+    displayName: "GET /webhooks/list",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Webhook"],
+        operation: ["List Webhooks"],
+      },
+    },
+  },
+  {
+    displayName: "Limit",
+    name: "limit",
+    description: "Max number of results to return",
+    default: 50,
+    type: "number",
+    routing: {
+      send: {
+        type: "query",
+        property: "limit",
+        value: "={{ $value }}",
+        propertyInDotNotation: false,
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Webhook"],
+        operation: ["List Webhooks"],
+      },
+    },
+    typeOptions: {
+      minValue: 1,
+      maxValue: 200,
+    },
+  },
+  {
+    displayName: "Offset",
+    name: "offset",
+    description: "The initial index from which to return the results",
+    default: 0,
+    type: "number",
+    routing: {
+      send: {
+        type: "query",
+        property: "offset",
+        value: "={{ $value }}",
+        propertyInDotNotation: false,
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Webhook"],
+        operation: ["List Webhooks"],
+      },
+    },
+    typeOptions: {
+      minValue: 0,
     },
   },
 ];
