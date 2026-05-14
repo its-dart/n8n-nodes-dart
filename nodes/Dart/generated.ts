@@ -703,7 +703,7 @@ export const properties: INodeProperties[] = [
     required: true,
     name: "item",
     type: "json",
-    default: "{}",
+    default: '{\n  "instructions": {},\n  "forwarding": {\n    "workflows": [\n      {}\n    ]\n  },\n  "local": {}\n}',
     routing: {
       send: {
         property: "item",
@@ -780,7 +780,7 @@ export const properties: INodeProperties[] = [
     required: true,
     name: "item",
     type: "json",
-    default: "{}",
+    default: '{\n  "instructions": {},\n  "forwarding": {\n    "workflows": [\n      {}\n    ]\n  },\n  "local": {}\n}',
     routing: {
       send: {
         property: "item",
@@ -1912,7 +1912,7 @@ export const properties: INodeProperties[] = [
     name: "item",
     type: "json",
     default:
-      '{\n  "assignees": [\n    null\n  ],\n  "tags": [\n    null\n  ],\n  "customProperties": {\n    "customCheckboxProperty": true,\n    "customDatesProperty": "2025-05-10",\n    "customDatesPropertyWithRange": [\n      "2025-05-01",\n      "2025-05-30"\n    ],\n    "customMultiselectProperty": [\n      "frontend",\n      "bug"\n    ],\n    "customNumberPropertyWithIntegerFormat": 5,\n    "customNumberPropertyWithPercentageFormat": 75,\n    "customNumberPropertyWithDollarsFormat": 1500.5,\n    "customSelectProperty": "In Progress",\n    "customStatusProperty": "Blocked",\n    "customTextProperty": "This task requires additional review from the design team",\n    "customUserProperty": "john.doe@example.com",\n    "customMultipleUserProperty": [\n      "john.doe@example.com",\n      "Alice Smith"\n    ]\n  },\n  "taskRelationships": {\n    "subtaskIds": [\n      "abcdefghijk1",\n      "abcdefghijk2"\n    ],\n    "blockerIds": [\n      "abcdefghijk3"\n    ],\n    "blockingIds": [\n      "abcdefghijk4"\n    ],\n    "duplicateIds": [\n      "abcdefghijk5"\n    ],\n    "relatedIds": [\n      "abcdefghijk6",\n      "abcdefghijk7"\n    ]\n  }\n}',
+      '{\n  "assignees": [\n    null\n  ],\n  "reviewers": [\n    null\n  ],\n  "tags": [\n    null\n  ],\n  "customProperties": {\n    "customCheckboxProperty": true,\n    "customDatesProperty": "2025-05-10",\n    "customDatesPropertyWithRange": [\n      "2025-05-01",\n      "2025-05-30"\n    ],\n    "customMultiselectProperty": [\n      "frontend",\n      "bug"\n    ],\n    "customNumberPropertyWithIntegerFormat": 5,\n    "customNumberPropertyWithPercentageFormat": 75,\n    "customNumberPropertyWithDollarsFormat": 1500.5,\n    "customSelectProperty": "In Progress",\n    "customStatusProperty": "Blocked",\n    "customTextProperty": "This task requires additional review from the design team",\n    "customUserProperty": "john.doe@example.com",\n    "customMultipleUserProperty": [\n      "john.doe@example.com",\n      "Alice Smith"\n    ]\n  },\n  "taskRelationships": {\n    "subtaskIds": [\n      "abcdefghijk1",\n      "abcdefghijk2"\n    ],\n    "blockerIds": [\n      "abcdefghijk3"\n    ],\n    "blockingIds": [\n      "abcdefghijk4"\n    ],\n    "duplicateIds": [\n      "abcdefghijk5"\n    ],\n    "relatedIds": [\n      "abcdefghijk6",\n      "abcdefghijk7"\n    ]\n  }\n}',
     routing: {
       send: {
         property: "item",
@@ -1990,7 +1990,7 @@ export const properties: INodeProperties[] = [
     name: "item",
     type: "json",
     default:
-      '{\n  "parentId": {},\n  "assignees": [\n    null\n  ],\n  "tags": [\n    null\n  ],\n  "customProperties": {\n    "customCheckboxProperty": true,\n    "customDatesProperty": "2025-05-10",\n    "customDatesPropertyWithRange": [\n      "2025-05-01",\n      "2025-05-30"\n    ],\n    "customMultiselectProperty": [\n      "frontend",\n      "bug"\n    ],\n    "customNumberPropertyWithIntegerFormat": 5,\n    "customNumberPropertyWithPercentageFormat": 75,\n    "customNumberPropertyWithDollarsFormat": 1500.5,\n    "customSelectProperty": "In Progress",\n    "customStatusProperty": "Blocked",\n    "customTextProperty": "This task requires additional review from the design team",\n    "customUserProperty": "john.doe@example.com",\n    "customMultipleUserProperty": [\n      "john.doe@example.com",\n      "Alice Smith"\n    ]\n  },\n  "taskRelationships": {\n    "subtaskIds": [\n      "abcdefghijk1",\n      "abcdefghijk2"\n    ],\n    "blockerIds": [\n      "abcdefghijk3"\n    ],\n    "blockingIds": [\n      "abcdefghijk4"\n    ],\n    "duplicateIds": [\n      "abcdefghijk5"\n    ],\n    "relatedIds": [\n      "abcdefghijk6",\n      "abcdefghijk7"\n    ]\n  }\n}',
+      '{\n  "parentId": {},\n  "assignees": [\n    null\n  ],\n  "reviewers": [\n    null\n  ],\n  "tags": [\n    null\n  ],\n  "customProperties": {\n    "customCheckboxProperty": true,\n    "customDatesProperty": "2025-05-10",\n    "customDatesPropertyWithRange": [\n      "2025-05-01",\n      "2025-05-30"\n    ],\n    "customMultiselectProperty": [\n      "frontend",\n      "bug"\n    ],\n    "customNumberPropertyWithIntegerFormat": 5,\n    "customNumberPropertyWithPercentageFormat": 75,\n    "customNumberPropertyWithDollarsFormat": 1500.5,\n    "customSelectProperty": "In Progress",\n    "customStatusProperty": "Blocked",\n    "customTextProperty": "This task requires additional review from the design team",\n    "customUserProperty": "john.doe@example.com",\n    "customMultipleUserProperty": [\n      "john.doe@example.com",\n      "Alice Smith"\n    ]\n  },\n  "taskRelationships": {\n    "subtaskIds": [\n      "abcdefghijk1",\n      "abcdefghijk2"\n    ],\n    "blockerIds": [\n      "abcdefghijk3"\n    ],\n    "blockingIds": [\n      "abcdefghijk4"\n    ],\n    "duplicateIds": [\n      "abcdefghijk5"\n    ],\n    "relatedIds": [\n      "abcdefghijk6",\n      "abcdefghijk7"\n    ]\n  }\n}',
     routing: {
       send: {
         property: "item",
@@ -2703,6 +2703,34 @@ export const properties: INodeProperties[] = [
           send: {
             type: "query",
             property: "priority",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Reviewer",
+        name: "reviewer",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "reviewer",
+            value: "={{ $value }}",
+            propertyInDotNotation: false,
+          },
+        },
+      },
+      {
+        displayName: "Reviewer ID",
+        name: "reviewer_id",
+        default: "",
+        type: "string",
+        routing: {
+          send: {
+            type: "query",
+            property: "reviewer_id",
             value: "={{ $value }}",
             propertyInDotNotation: false,
           },
