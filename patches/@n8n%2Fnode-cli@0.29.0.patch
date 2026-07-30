@@ -1,0 +1,46 @@
+diff --git a/dist/utils/child-process.js b/dist/utils/child-process.js
+index e40bb7c84d96f1aa0ce9e336516c9a637d4ed343..228cfc2a3e34f56927c33471fe17cb7098f8f046 100644
+--- a/dist/utils/child-process.js
++++ b/dist/utils/child-process.js
+@@ -21,8 +21,9 @@ async function runCommand(cmd, args = [], opts = {}) {
+             stdio: opts.stdio ?? ['ignore', 'pipe', 'pipe'],
+             shell: process.platform === 'win32',
+         };
++        const localArgs = packageManager === 'bun' ? ['x', cmd, ...args] : ['exec', '--', cmd, ...args];
+         const child = opts.context === 'local'
+-            ? (0, node_child_process_1.spawn)(packageManager, ['exec', '--', cmd, ...args], options)
++            ? (0, node_child_process_1.spawn)(packageManager, localArgs, options)
+             : (0, node_child_process_1.spawn)(cmd, args, options);
+         const stdoutBuffers = [];
+         const stderrBuffers = [];
+diff --git a/dist/utils/package-manager.d.ts b/dist/utils/package-manager.d.ts
+index 6d73cb081258fa647a6638ab05c5a83f0ebacc93..a14915f526ba1b40f8b51389c89e723cfbbcb8ef 100644
+--- a/dist/utils/package-manager.d.ts
++++ b/dist/utils/package-manager.d.ts
+@@ -1,4 +1,4 @@
+-type PackageManager = 'npm' | 'yarn' | 'pnpm';
++type PackageManager = 'bun' | 'npm' | 'yarn' | 'pnpm';
+ export declare function detectPackageManagerFromUserAgent(): PackageManager | null;
+ export declare function detectPackageManager(): Promise<PackageManager | null>;
+ export {};
+diff --git a/dist/utils/package-manager.js b/dist/utils/package-manager.js
+index 6a03e5a44b33610f848739f639d92076dc7e07da..3ffef7a34c5ff9ca36f266f43fc0516f93c61a66 100644
+--- a/dist/utils/package-manager.js
++++ b/dist/utils/package-manager.js
+@@ -9,6 +9,8 @@ const promises_1 = __importDefault(require("node:fs/promises"));
+ function detectPackageManagerFromUserAgent() {
+     if ('npm_config_user_agent' in process.env) {
+         const ua = process.env['npm_config_user_agent'] ?? '';
++        if (ua.includes('bun'))
++            return 'bun';
+         if (ua.includes('pnpm'))
+             return 'pnpm';
+         if (ua.includes('yarn'))
+@@ -20,6 +22,7 @@ function detectPackageManagerFromUserAgent() {
+ }
+ async function detectPackageManagerFromLockFiles() {
+     const lockFiles = {
++        bun: 'bun.lock',
+         npm: 'package-lock.json',
+         yarn: 'yarn.lock',
+         pnpm: 'pnpm-lock.yaml',

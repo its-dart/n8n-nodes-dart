@@ -1,3 +1,4 @@
+bunx
 devlikeapro
 npmjs
 unstarted
