@@ -29,7 +29,7 @@
     "lint-fix": "n8n-node lint --fix",
     "spellcheck": "cspell '**' --no-progress",
     "release": "n8n-node release",
-    "req-up-all": "yarn upgrade-interactive --latest --exact",
+    "req-up-all": "bun update --latest --interactive",
     "prepublishOnly": "n8n-node prerelease",
     "make-api": "./admin/make-api.sh"
   },
@@ -63,5 +63,9 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "packageManager": "bun@1.3.14",
+  "patchedDependencies": {
+    "@n8n/node-cli@0.29.0": "patches/@n8n%2Fnode-cli@0.29.0.patch"
   }
 }

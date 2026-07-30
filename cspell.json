@@ -12,5 +12,5 @@
     }
   ],
   "dictionaries": ["cspell-dictionary"],
-  "ignorePaths": ["./cspell_dictionary.txt", "openapi.json", "./yarn.lock", ".git/**/*", ".gitignore"]
+  "ignorePaths": ["./cspell_dictionary.txt", "openapi.json", "./bun.lock", ".git/**/*", ".gitignore"]
 }

@@ -1,0 +1,93 @@
+diff --git a/dist/commands/dev/index.js b/dist/commands/dev/index.js
+index f6280e71ca92ad58a7bf7c5005b7b5fb75175f00..e91ab3aa52c10da6c23a78d7b9ef24aa886e13b1 100644
+--- a/dist/commands/dev/index.js
++++ b/dist/commands/dev/index.js
+@@ -43,16 +43,21 @@ class Dev extends core_1.Command {
+         }, 10_000);
+         const n8nSpinner = (0, utils_1.createSpinner)(() => spinnerMessage);
++        const tscArgs = packageManager === 'bun'
++            ? ['x', 'tsc', '--watch', '--pretty']
++            : ['exec', '--', 'tsc', '--watch', '--pretty'];
+         const commandsList = [
+             {
+                 cmd: packageManager,
+-                args: ['exec', '--', 'tsc', '--watch', '--pretty'],
++                args: tscArgs,
+                 name: 'TypeScript Build (watching)',
+             },
+         ];
+         if (hasN8n) {
+             commandsList.push({
+-                cmd: 'npx',
+-                args: ['-y', '--color=always', '--prefer-online', 'n8n@latest'],
++                cmd: packageManager === 'bun' ? 'bun' : 'npx',
++                args: packageManager === 'bun'
++                    ? ['x', 'n8n@latest']
++                    : ['-y', '--color=always', '--prefer-online', 'n8n@latest'],
+                 name: 'n8n Server',
+                 cwd: n8nUserFolder,
+                 env: {
+diff --git a/dist/utils/child-process.js b/dist/utils/child-process.js
+index e40bb7c84d96f1aa0ce9e336516c9a637d4ed343..2b2a76d1b1c7e992290f88d350f9a6e6eb00feb5 100644
+--- a/dist/utils/child-process.js
++++ b/dist/utils/child-process.js
+@@ -21,8 +21,9 @@ async function runCommand(cmd, args = [], opts = {}) {
+             stdio: opts.stdio ?? ['ignore', 'pipe', 'pipe'],
+             shell: process.platform === 'win32',
+         };
++        const localArgs = packageManager === 'bun' ? ['x', cmd, ...args] : ['exec', '--', cmd, ...args];
+         const child = opts.context === 'local'
+-            ? (0, node_child_process_1.spawn)(packageManager, ['exec', '--', cmd, ...args], options)
++            ? (0, node_child_process_1.spawn)(packageManager, localArgs, options)
+             : (0, node_child_process_1.spawn)(cmd, args, options);
+         const stdoutBuffers = [];
+         const stderrBuffers = [];
+diff --git a/dist/utils/command-suggestions.js b/dist/utils/command-suggestions.js
+index efbf3b897fd191e6857a0d14a126b71778b3a571..8e9349055b36b475d55362ff51272d1ba4ed8146 100644
+--- a/dist/utils/command-suggestions.js
++++ b/dist/utils/command-suggestions.js
+@@ -12,7 +12,11 @@ const package_manager_1 = require("./package-manager");
+ async function getExecCommand(type = 'cli') {
+     const packageManager = (await (0, package_manager_1.detectPackageManager)()) ?? 'npm';
+     if (type === 'script') {
+-        return packageManager === 'npm' ? 'npm run' : packageManager;
++        if (packageManager === 'npm')
++            return 'npm run';
++        return packageManager === 'bun' ? 'bun run' : packageManager;
+     }
+-    return packageManager === 'npm' ? 'npx' : packageManager;
++    if (packageManager === 'npm')
++        return 'npx';
++    return packageManager === 'bun' ? 'bunx' : packageManager;
+ }
+diff --git a/dist/utils/package-manager.d.ts b/dist/utils/package-manager.d.ts
+index 6d73cb081258fa647a6638ab05c5a83f0ebacc93..a14915f526ba1b40f8b51389c89e723cfbbcb8ef 100644
+--- a/dist/utils/package-manager.d.ts
++++ b/dist/utils/package-manager.d.ts
+@@ -1,4 +1,4 @@
+-type PackageManager = 'npm' | 'yarn' | 'pnpm';
++type PackageManager = 'bun' | 'npm' | 'yarn' | 'pnpm';
+ export declare function detectPackageManagerFromUserAgent(): PackageManager | null;
+ export declare function detectPackageManager(): Promise<PackageManager | null>;
+ export {};
+diff --git a/dist/utils/package-manager.js b/dist/utils/package-manager.js
+index 6a03e5a44b33610f848739f639d92076dc7e07da..213abde8fe5cfd83a8d45652a7b383d9df251947 100644
+--- a/dist/utils/package-manager.js
++++ b/dist/utils/package-manager.js
+@@ -9,6 +9,8 @@ const promises_1 = __importDefault(require("node:fs/promises"));
+ function detectPackageManagerFromUserAgent() {
+     if ('npm_config_user_agent' in process.env) {
+         const ua = process.env['npm_config_user_agent'] ?? '';
++        if (ua.includes('bun'))
++            return 'bun';
+         if (ua.includes('pnpm'))
+             return 'pnpm';
+         if (ua.includes('yarn'))
+@@ -20,6 +22,7 @@ function detectPackageManagerFromUserAgent() {
+ }
+ async function detectPackageManagerFromLockFiles() {
+     const lockFiles = {
++        bun: 'bun.lock',
+         npm: 'package-lock.json',
+         yarn: 'yarn.lock',
+         pnpm: 'pnpm-lock.yaml',
