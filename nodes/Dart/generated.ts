@@ -19,6 +19,10 @@ export const properties: INodeProperties[] = [
         value: "Attachment",
       },
       {
+        name: "Auth",
+        value: "Auth",
+      },
+      {
         name: "Comment",
         value: "Comment",
       },
@@ -303,6 +307,19 @@ export const properties: INodeProperties[] = [
           },
         },
       },
+      {
+        name: "Update Doc Text",
+        value: "Update Doc Text",
+        action: "Update a doc s text content with text updates",
+        description:
+          'Apply targeted text updates to a doc\'s content; use instead of updateDoc when only the text body changes. Each update is one of: "replace" (swap oldText for newText), "insert_before" / "insert_after" (insert newText relative to anchorText), or "delete" (remove oldText), applied in order and atomically. When occurrence is omitted, the target text must be unique; otherwise specify occurrence (1-indexed). Preferred over a full update for long content: fewer tokens, and no risk of rewriting unrelated text.',
+        routing: {
+          request: {
+            method: "POST",
+            url: '=/docs/{{$parameter["id"]}}/update-text',
+          },
+        },
+      },
     ],
     default: "Create Doc",
   },
@@ -359,6 +376,44 @@ export const properties: INodeProperties[] = [
       },
     ],
     default: "List Help Center Articles",
+  },
+  {
+    displayName: "Operation",
+    name: "operation",
+    type: "options",
+    noDataExpression: true,
+    displayOptions: {
+      show: {
+        resource: ["Auth"],
+      },
+    },
+    options: [
+      {
+        name: "Get Me",
+        value: "Get Me",
+        action: "Check authentication",
+        description: "Check the current public API authentication token and return the authenticated user",
+        routing: {
+          request: {
+            method: "GET",
+            url: "=/me",
+          },
+        },
+      },
+      {
+        name: "Token Login",
+        value: "Token Login",
+        action: "Exchange login token",
+        description: "Exchange a standard Dart login token for the user's public API authentication token",
+        routing: {
+          request: {
+            method: "POST",
+            url: "=/token-login",
+          },
+        },
+      },
+    ],
+    default: "Get Me",
   },
   {
     displayName: "Operation",
@@ -552,6 +607,19 @@ export const properties: INodeProperties[] = [
           },
         },
       },
+      {
+        name: "Update Task Description",
+        value: "Update Task Description",
+        action: "Update a task s description with text updates",
+        description:
+          'Apply targeted text updates to a task\'s description; use instead of updateTask when only the description changes. Each update is one of: "replace" (swap oldText for newText), "insert_before" / "insert_after" (insert newText relative to anchorText), or "delete" (remove oldText), applied in order and atomically. When occurrence is omitted, the target text must be unique; otherwise specify occurrence (1-indexed). Preferred over a full update for long content: fewer tokens, and no risk of rewriting unrelated text.',
+        routing: {
+          request: {
+            method: "POST",
+            url: '=/tasks/{{$parameter["id"]}}/update-description',
+          },
+        },
+      },
     ],
     default: "Add Task Time Tracking",
   },
@@ -703,7 +771,7 @@ export const properties: INodeProperties[] = [
     required: true,
     name: "item",
     type: "json",
-    default: '{\n  "instructions": {},\n  "forwarding": {\n    "workflows": [\n      {}\n    ]\n  },\n  "local": {}\n}',
+    default: '{\n  "instructions": {},\n  "forwarding": {},\n  "local": {}\n}',
     routing: {
       send: {
         property: "item",
@@ -780,7 +848,7 @@ export const properties: INodeProperties[] = [
     required: true,
     name: "item",
     type: "json",
-    default: '{\n  "instructions": {},\n  "forwarding": {\n    "workflows": [\n      {}\n    ]\n  },\n  "local": {}\n}',
+    default: '{\n  "instructions": {},\n  "forwarding": {},\n  "local": {}\n}',
     routing: {
       send: {
         property: "item",
@@ -1352,6 +1420,57 @@ export const properties: INodeProperties[] = [
     },
   },
   {
+    displayName: "POST /docs/{ID}/update-text",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Doc"],
+        operation: ["Update Doc Text"],
+      },
+    },
+  },
+  {
+    displayName: "ID",
+    name: "id",
+    required: true,
+    default: "",
+    type: "string",
+    displayOptions: {
+      show: {
+        resource: ["Doc"],
+        operation: ["Update Doc Text"],
+      },
+    },
+  },
+  {
+    displayName: "Updates",
+    required: true,
+    name: "updates",
+    type: "json",
+    default: "[\n  {}\n]",
+    description:
+      "An ordered list of text updates to apply. Each one operates on the result of the previous one. Applied atomically — if any update fails, none are persisted.",
+    routing: {
+      send: {
+        property: "updates",
+        propertyInDotNotation: false,
+        type: "body",
+        value: "={{ JSON.parse($value) }}",
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Doc"],
+        operation: ["Update Doc Text"],
+      },
+    },
+  },
+  {
     displayName: "GET /docs/list",
     name: "operation",
     type: "notice",
@@ -1648,6 +1767,21 @@ export const properties: INodeProperties[] = [
         },
       },
     ],
+  },
+  {
+    displayName: "GET /me",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Auth"],
+        operation: ["Get Me"],
+      },
+    },
   },
   {
     displayName: "POST /skills",
@@ -2303,6 +2437,57 @@ export const properties: INodeProperties[] = [
         },
       },
     ],
+  },
+  {
+    displayName: "POST /tasks/{ID}/update-description",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Task"],
+        operation: ["Update Task Description"],
+      },
+    },
+  },
+  {
+    displayName: "ID",
+    name: "id",
+    required: true,
+    default: "",
+    type: "string",
+    displayOptions: {
+      show: {
+        resource: ["Task"],
+        operation: ["Update Task Description"],
+      },
+    },
+  },
+  {
+    displayName: "Updates",
+    required: true,
+    name: "updates",
+    type: "json",
+    default: "[\n  {}\n]",
+    description:
+      "An ordered list of text updates to apply. Each one operates on the result of the previous one. Applied atomically — if any update fails, none are persisted.",
+    routing: {
+      send: {
+        property: "updates",
+        propertyInDotNotation: false,
+        type: "body",
+        value: "={{ JSON.parse($value) }}",
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Task"],
+        operation: ["Update Task Description"],
+      },
+    },
   },
   {
     displayName: "GET /tasks/list",
@@ -2992,6 +3177,43 @@ export const properties: INodeProperties[] = [
         },
       },
     ],
+  },
+  {
+    displayName: "POST /token-login",
+    name: "operation",
+    type: "notice",
+    typeOptions: {
+      theme: "info",
+    },
+    default: "",
+    displayOptions: {
+      show: {
+        resource: ["Auth"],
+        operation: ["Token Login"],
+      },
+    },
+  },
+  {
+    displayName: "Token",
+    required: true,
+    name: "token",
+    type: "string",
+    typeOptions: { password: true },
+    default: "",
+    routing: {
+      send: {
+        property: "token",
+        propertyInDotNotation: false,
+        type: "body",
+        value: "={{ $value }}",
+      },
+    },
+    displayOptions: {
+      show: {
+        resource: ["Auth"],
+        operation: ["Token Login"],
+      },
+    },
   },
   {
     displayName: "GET /views/{ID}",

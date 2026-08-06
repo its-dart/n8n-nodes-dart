@@ -1,8 +1,9 @@
 diff --git a/dist/commands/dev/index.js b/dist/commands/dev/index.js
-index f6280e71ca92ad58a7bf7c5005b7b5fb75175f00..e91ab3aa52c10da6c23a78d7b9ef24aa886e13b1 100644
+index 60ae91e42dbfd2b1d289c7e1ff146660d8afd665..3cfcc3e52196902060fdb8cf016cc173645b915a 100644
 --- a/dist/commands/dev/index.js
 +++ b/dist/commands/dev/index.js
-@@ -43,16 +43,21 @@ class Dev extends core_1.Command {
+@@ -42,17 +42,22 @@ class Dev extends core_1.Command {
+             spinnerMessage = `Installing n8n... ${picocolors_1.default.dim('(this can take a while on first run)')}`;
          }, 10_000);
          const n8nSpinner = (0, utils_1.createSpinner)(() => spinnerMessage);
 +        const tscArgs = packageManager === 'bun'
@@ -43,10 +44,10 @@ index e40bb7c84d96f1aa0ce9e336516c9a637d4ed343..2b2a76d1b1c7e992290f88d350f9a6e6
          const stdoutBuffers = [];
          const stderrBuffers = [];
 diff --git a/dist/utils/command-suggestions.js b/dist/utils/command-suggestions.js
-index efbf3b897fd191e6857a0d14a126b71778b3a571..8e9349055b36b475d55362ff51272d1ba4ed8146 100644
+index efbf3b897fd191e6857a0d14a126b71778b3a571..9a29fc1db2fbbace3d3ddb2c3bd5fc56b765186d 100644
 --- a/dist/utils/command-suggestions.js
 +++ b/dist/utils/command-suggestions.js
-@@ -12,7 +12,11 @@ const package_manager_1 = require("./package-manager");
+@@ -12,9 +12,13 @@ const package_manager_1 = require("./package-manager");
  async function getExecCommand(type = 'cli') {
      const packageManager = (await (0, package_manager_1.detectPackageManager)()) ?? 'npm';
      if (type === 'script') {
@@ -60,6 +61,8 @@ index efbf3b897fd191e6857a0d14a126b71778b3a571..8e9349055b36b475d55362ff51272d1b
 +        return 'npx';
 +    return packageManager === 'bun' ? 'bunx' : packageManager;
  }
+ function formatCommand(command) {
+     return picocolors_1.default.cyan(command);
 diff --git a/dist/utils/package-manager.d.ts b/dist/utils/package-manager.d.ts
 index 6d73cb081258fa647a6638ab05c5a83f0ebacc93..a14915f526ba1b40f8b51389c89e723cfbbcb8ef 100644
 --- a/dist/utils/package-manager.d.ts

@@ -5,7 +5,10 @@ export class Dart implements INodeType {
   description: INodeTypeDescription = {
     displayName: "Dart",
     name: "dart",
-    icon: "file:dart.svg",
+    icon: {
+      light: "file:dart.svg",
+      dark: "file:dart.dark.svg",
+    },
     group: ["transform"],
     version: 1,
     subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',

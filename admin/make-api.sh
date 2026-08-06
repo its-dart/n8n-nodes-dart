@@ -35,6 +35,6 @@ bun remove @devlikeapro/n8n-openapi-node --silent
 
 echo "Formatting, linting and re-formatting..."
 # We must format before linting, because it's picky and won't work
-bun run prettier-fix
+bun run format-fix
 bun run lint-fix
-bun run prettier-fix
+bun run format-fix

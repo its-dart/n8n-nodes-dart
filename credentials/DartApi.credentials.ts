@@ -10,7 +10,10 @@ export class DartApi implements ICredentialType {
   name = "dartApi";
   displayName = "Dart API";
   documentationUrl = "https://help.dartai.com/en/articles/12313191-n8n-node-setup";
-  icon: Icon = "file:../nodes/Dart/dart.svg";
+  icon: Icon = {
+    light: "file:../nodes/Dart/dart.svg",
+    dark: "file:../nodes/Dart/dart.dark.svg",
+  };
   properties: INodeProperties[] = [
     {
       displayName: "Dart API URL",

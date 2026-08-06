@@ -1,13 +1,6 @@
 {
   "name": "n8n-nodes-dart",
   "version": "0.2.7",
-  "description": "The Dart n8n node",
-  "license": "MIT",
-  "homepage": "https://dartai.com",
-  "keywords": [
-    "dart",
-    "n8n-community-node-package"
-  ],
   "author": {
     "name": "Dart",
     "email": "software@dartai.com"
@@ -16,26 +9,33 @@
     "type": "git",
     "url": "git+https://github.com/its-dart/n8n-nodes-dart.git"
   },
+  "devDependencies": {
+    "@n8n/node-cli": "^0.42.0",
+    "@types/node": "26.1.2",
+    "cspell": "10.0.1",
+    "eslint": "9.39.2",
+    "n8n-workflow": "2.16.0",
+    "prettier": "3.9.6",
+    "release-it": "21.0.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "description": "The Dart n8n node",
   "engines": {
     "node": ">=20"
-  },
-  "scripts": {
-    "build": "n8n-node build",
-    "build:watch": "tsc --watch",
-    "dev": "n8n-node dev",
-    "prettier-check": "prettier --check .",
-    "prettier-fix": "prettier --write . --list-different",
-    "lint": "n8n-node lint",
-    "lint-fix": "n8n-node lint --fix",
-    "spellcheck": "cspell '**' --no-progress",
-    "release": "n8n-node release",
-    "req-up-all": "bun update --latest --interactive",
-    "prepublishOnly": "n8n-node prerelease",
-    "make-api": "./admin/make-api.sh"
   },
   "files": [
     "dist"
   ],
+  "homepage": "https://dartai.com",
+  "keywords": [
+    "dart",
+    "n8n-community-node-package"
+  ],
+  "license": "MIT",
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
@@ -45,27 +45,26 @@
       "dist/nodes/Dart/Dart.node.js"
     ]
   },
-  "dependencies": {},
-  "devDependencies": {
-    "@n8n/node-cli": ">=0.23.0",
-    "@types/node": "25.0.10",
-    "cspell": "9.6.2",
-    "eslint": "9.39.2",
-    "n8n-workflow": "2.6.0",
-    "prettier": "3.8.1",
-    "release-it": "19.2.4",
-    "ts-node": "10.9.2",
-    "typescript": "5.9.3"
-  },
-  "peerDependencies": {
-    "n8n-workflow": "*"
+  "packageManager": "bun@1.3.14",
+  "patchedDependencies": {
+    "@n8n/node-cli@0.42.0": "patches/@n8n%2Fnode-cli@0.42.0.patch"
   },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "packageManager": "bun@1.3.14",
-  "patchedDependencies": {
-    "@n8n/node-cli@0.29.0": "patches/@n8n%2Fnode-cli@0.29.0.patch"
+  "scripts": {
+    "build": "n8n-node build",
+    "build:watch": "tsc --watch",
+    "dev": "n8n-node dev",
+    "format-check": "prettier --check .",
+    "format-fix": "prettier --write . --list-different",
+    "lint": "n8n-node lint",
+    "lint-fix": "n8n-node lint --fix",
+    "spellcheck": "cspell '**' --no-progress",
+    "release": "n8n-node release",
+    "req-up-all": "bun update --latest --interactive",
+    "prepublishOnly": "n8n-node prerelease",
+    "make-api": "./admin/make-api.sh"
   }
 }
