@@ -34,7 +34,7 @@ jobs:
 
       - name: Install and check dependencies
         run: |
-          bun ci
+          bun ci --ignore-scripts
           git diff --exit-code
 
       - name: Lint
