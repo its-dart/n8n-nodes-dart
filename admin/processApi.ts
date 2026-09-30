@@ -69,6 +69,12 @@ const properties = parser.build(CUSTOM_DEFAULTS).map((e) => {
   // Sort options by name
   if (property.options) {
     property.options.sort((a, b) => a.name.localeCompare(b.name));
+    // IDs must be uppercase in option descriptions (n8n lint rule)
+    property.options.forEach((o) => {
+      if ("description" in o && o.description) {
+        o.description = o.description.replace(/\bid\b/g, "ID");
+      }
+    });
   }
 
   // Remove Webhook as option

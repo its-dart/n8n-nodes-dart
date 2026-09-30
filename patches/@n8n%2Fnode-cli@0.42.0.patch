@@ -1,3 +1,6 @@
+diff --git a/node_modules/@n8n/node-cli/.bun-tag-b3c045939dcdaf1c b/.bun-tag-b3c045939dcdaf1c
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
 diff --git a/dist/commands/dev/index.js b/dist/commands/dev/index.js
 index 60ae91e42dbfd2b1d289c7e1ff146660d8afd665..3cfcc3e52196902060fdb8cf016cc173645b915a 100644
 --- a/dist/commands/dev/index.js
@@ -28,6 +31,20 @@ index 60ae91e42dbfd2b1d289c7e1ff146660d8afd665..3cfcc3e52196902060fdb8cf016cc173
                  name: 'n8n Server',
                  cwd: n8nUserFolder,
                  env: {
+diff --git a/dist/commands/release.js b/dist/commands/release.js
+index e4781fbc7123b353c7b4a2690dd3b966fd43436a..093731bbd56bd31985df75ff35cfecf9ad9721a6 100644
+--- a/dist/commands/release.js
++++ b/dist/commands/release.js
+@@ -50,8 +50,7 @@ class Release extends core_1.Command {
+                 prompts_1.log.warning('Publishing directly from your machine will not include npm provenance, which is required for n8n Cloud starting May 1 2026.\nConsider switching to GitHub Actions publishing. See: https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/');
+             }
+             await (0, child_process_1.runCommand)('release-it', [
+-                '-n',
+-                '--git.requireBranch main',
++                '--git.requireBranch=main',
+                 '--git.requireCleanWorkingDir',
+                 '--git.requireUpstream',
+                 '--git.requireCommits',
 diff --git a/dist/utils/child-process.js b/dist/utils/child-process.js
 index e40bb7c84d96f1aa0ce9e336516c9a637d4ed343..2b2a76d1b1c7e992290f88d350f9a6e6eb00feb5 100644
 --- a/dist/utils/child-process.js

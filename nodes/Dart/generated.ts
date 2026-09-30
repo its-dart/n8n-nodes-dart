@@ -126,7 +126,7 @@ export const properties: INodeProperties[] = [
         value: "Update Agent",
         action: "Update an agent",
         description:
-          "Update an agent's name and/or description. Only the fields provided will be changed. The agent is identified by its ID in the URL.",
+          "Update an existing agent. The agent ID and fields to change. Use the same ID as the path ID; omitted top-level fields keep their current values.",
         routing: {
           request: {
             method: "PUT",
@@ -806,6 +806,8 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description:
+      "The agent's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL. Use an internal agent ID returned by the agent listing.",
     default: "",
     type: "string",
     displayOptions: {
@@ -834,6 +836,8 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description:
+      "The agent's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL. Use an internal agent ID returned by the agent listing.",
     default: "",
     type: "string",
     displayOptions: {
@@ -883,6 +887,8 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description:
+      "The agent's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL. Use an internal agent ID returned by the agent listing.",
     default: "",
     type: "string",
     displayOptions: {
@@ -1060,6 +1066,7 @@ export const properties: INodeProperties[] = [
     displayName: "Task ID",
     name: "task_id",
     required: true,
+    description: "The Dart ID of the task whose comments to list; required even when task is provided",
     default: "",
     type: "string",
     routing: {
@@ -1093,6 +1100,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Author",
         name: "author",
+        description: "Case-insensitive substring of the comment author's name or email",
         default: "",
         type: "string",
         routing: {
@@ -1107,6 +1115,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Author ID",
         name: "author_id",
+        description: "The Dart user ID of the comment author; accepts an ID, not a name or email",
         default: "",
         type: "string",
         routing: {
@@ -1121,7 +1130,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "IDs",
         name: "ids",
-        description: "Filter by IDs",
+        description: "Comma-separated Dart IDs to include. Each ID is a 12-character alphanumeric string.",
         default: "",
         type: "string",
         routing: {
@@ -1152,6 +1161,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Parent ID",
         name: "parent_id",
+        description:
+          "The Dart ID of the parent comment whose replies to return. An empty string matches top-level comments.",
         default: "",
         type: "string",
         routing: {
@@ -1166,6 +1177,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Published At",
         name: "published_at",
+        description:
+          "Exact comment publication time to match. Use an ISO 8601 timestamp, preferably with Z or a UTC offset, e.g. 2026-09-09T12:00:00Z.",
         default: "",
         type: "string",
         routing: {
@@ -1180,6 +1193,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Published At After",
         name: "published_at_after",
+        description:
+          "Inclusive lower bound on comment publication time. Use an ISO 8601 timestamp, preferably with Z or a UTC offset, e.g. 2026-09-09T12:00:00Z.",
         default: "",
         type: "string",
         routing: {
@@ -1194,6 +1209,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Published At Before",
         name: "published_at_before",
+        description:
+          "Inclusive upper bound on comment publication time. Use an ISO 8601 timestamp, preferably with Z or a UTC offset, e.g. 2026-09-09T12:00:00Z.",
         default: "",
         type: "string",
         routing: {
@@ -1208,6 +1225,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Task",
         name: "task",
+        description: "Case-insensitive substring of the commented task's title",
         default: "",
         type: "string",
         routing: {
@@ -1222,6 +1240,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Text",
         name: "text",
+        description: "Case-insensitive substring of the stored rich-text content, including formatting metadata",
         default: "",
         type: "string",
         routing: {
@@ -1269,6 +1288,7 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description: "The dartboard's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL",
     default: "",
     type: "string",
     displayOptions: {
@@ -1333,6 +1353,7 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description: "The doc's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL",
     default: "",
     type: "string",
     displayOptions: {
@@ -1361,6 +1382,7 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description: "The doc's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL",
     default: "",
     type: "string",
     displayOptions: {
@@ -1410,6 +1432,7 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description: "The doc's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL",
     default: "",
     type: "string",
     displayOptions: {
@@ -1438,6 +1461,7 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description: "The doc's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL",
     default: "",
     type: "string",
     displayOptions: {
@@ -1550,6 +1574,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Editor",
         name: "editor",
+        description:
+          "Case-insensitive substring of the editor's name or email. An empty string matches items with no editor.",
         default: "",
         type: "string",
         routing: {
@@ -1564,6 +1590,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Folder",
         name: "folder",
+        description:
+          "Case-insensitive substring of the folder title, optionally prefixed with Space/ to also match the space title",
         default: "",
         type: "string",
         routing: {
@@ -1578,6 +1606,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Folder ID",
         name: "folder_id",
+        description: "The Dart ID of the folder to filter by; accepts an ID, not a title",
         default: "",
         type: "string",
         routing: {
@@ -1592,7 +1621,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "IDs",
         name: "ids",
-        description: "Filter by IDs",
+        description: "Comma-separated Dart IDs to include. Each ID is a 12-character alphanumeric string.",
         default: "",
         type: "string",
         routing: {
@@ -1607,6 +1636,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "In Trash",
         name: "in_trash",
+        description:
+          "Whether to return trashed items instead of non-trashed items. Defaults to false, even with no_defaults=true.",
         default: true,
         type: "boolean",
         routing: {
@@ -1622,8 +1653,8 @@ export const properties: INodeProperties[] = [
         displayName: "No Defaults",
         name: "no_defaults",
         description:
-          "Whether default filters and sorting are applied when false (default) or no defaults are applied when true. Explicit filters or sorting always override defaults.",
-        default: false,
+          "Whether to skip workspace-specific default filters. Defaults to true. Default ordering and the exclusion of trashed items still apply; use o and in_trash to override them.",
+        default: true,
         type: "boolean",
         routing: {
           send: {
@@ -1668,6 +1699,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Text",
         name: "text",
+        description: "Case-insensitive substring of the stored rich-text content, including formatting metadata",
         default: "",
         type: "string",
         routing: {
@@ -1682,6 +1714,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Title",
         name: "title",
+        description: "Case-insensitive substring of the title",
         default: "",
         type: "string",
         routing: {
@@ -1714,6 +1747,7 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description: "The folder's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL",
     default: "",
     type: "string",
     displayOptions: {
@@ -2081,6 +2115,7 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description: "The task's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL",
     default: "",
     type: "string",
     displayOptions: {
@@ -2109,6 +2144,7 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description: "The task's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL",
     default: "",
     type: "string",
     displayOptions: {
@@ -2159,6 +2195,7 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description: "The task's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL",
     default: "",
     type: "string",
     displayOptions: {
@@ -2187,6 +2224,7 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description: "The task's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL",
     default: "",
     type: "string",
     displayOptions: {
@@ -2259,6 +2297,7 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description: "The task's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL",
     default: "",
     type: "string",
     displayOptions: {
@@ -2332,30 +2371,9 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description: "The task's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL",
     default: "",
     type: "string",
-    displayOptions: {
-      show: {
-        resource: ["Task"],
-        operation: ["Add Task Time Tracking"],
-      },
-    },
-  },
-  {
-    displayName: "User",
-    required: true,
-    name: "user",
-    type: "string",
-    default: "",
-    description: "The name or email of the user to attribute the tracked time to or null to use the current user",
-    routing: {
-      send: {
-        property: "user",
-        propertyInDotNotation: false,
-        type: "body",
-        value: "={{ $value }}",
-      },
-    },
     displayOptions: {
       show: {
         resource: ["Task"],
@@ -2369,7 +2387,8 @@ export const properties: INodeProperties[] = [
     name: "startedAt",
     type: "string",
     default: "",
-    description: "The start timestamp for the tracked time entry in ISO 8601 format",
+    description:
+      "The start timestamp for the tracked time entry. Use an ISO 8601 date and time with Z or a UTC offset, e.g. 2026-09-09T10:00:00Z or 2026-09-09T12:00:00+02:00. A date alone or a timestamp without a timezone is invalid.",
     routing: {
       send: {
         property: "startedAt",
@@ -2391,7 +2410,8 @@ export const properties: INodeProperties[] = [
     name: "finishedAt",
     type: "string",
     default: "",
-    description: "The end timestamp for the tracked time entry in ISO 8601 format. Must be after the start time.",
+    description:
+      "The end timestamp for the tracked time entry. Must be after the start time. Use an ISO 8601 date and time with Z or a UTC offset, e.g. 2026-09-09T10:00:00Z or 2026-09-09T12:00:00+02:00. A date alone or a timestamp without a timezone is invalid.",
     routing: {
       send: {
         property: "finishedAt",
@@ -2436,6 +2456,21 @@ export const properties: INodeProperties[] = [
           },
         },
       },
+      {
+        displayName: "User",
+        name: "user",
+        type: "string",
+        default: "",
+        description: "The name or email of the user to attribute the tracked time to or null to use the current user",
+        routing: {
+          send: {
+            property: "user",
+            propertyInDotNotation: false,
+            type: "body",
+            value: "={{ $value }}",
+          },
+        },
+      },
     ],
   },
   {
@@ -2457,6 +2492,7 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description: "The task's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL",
     default: "",
     type: "string",
     displayOptions: {
@@ -2569,6 +2605,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Assignee",
         name: "assignee",
+        description:
+          "Case-insensitive substring of the assignee's name or email. An empty string matches items with no assignee.",
         default: "",
         type: "string",
         routing: {
@@ -2583,6 +2621,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Assignee ID",
         name: "assignee_id",
+        description:
+          "The Dart user ID of the assignee; accepts an ID, not a name or email. An empty string matches items with no assignee.",
         default: "",
         type: "string",
         routing: {
@@ -2597,6 +2637,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Completed At",
         name: "completed_at",
+        description:
+          "Exact completion time to match. Use an ISO 8601 timestamp, preferably with Z or a UTC offset, e.g. 2026-09-09T12:00:00Z.",
         default: "",
         type: "string",
         routing: {
@@ -2611,6 +2653,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Completed At After",
         name: "completed_at_after",
+        description:
+          "Inclusive lower bound on completion time. Use an ISO 8601 timestamp, preferably with Z or a UTC offset, e.g. 2026-09-09T12:00:00Z.",
         default: "",
         type: "string",
         routing: {
@@ -2625,6 +2669,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Completed At Before",
         name: "completed_at_before",
+        description:
+          "Inclusive upper bound on completion time. Use an ISO 8601 timestamp, preferably with Z or a UTC offset, e.g. 2026-09-09T12:00:00Z.",
         default: "",
         type: "string",
         routing: {
@@ -2639,6 +2685,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Created At",
         name: "created_at",
+        description:
+          "Exact creation time to match. Use an ISO 8601 timestamp, preferably with Z or a UTC offset, e.g. 2026-09-09T12:00:00Z.",
         default: "",
         type: "string",
         routing: {
@@ -2653,6 +2701,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Created At After",
         name: "created_at_after",
+        description:
+          "Inclusive lower bound on creation time. Use an ISO 8601 timestamp, preferably with Z or a UTC offset, e.g. 2026-09-09T12:00:00Z.",
         default: "",
         type: "string",
         routing: {
@@ -2667,6 +2717,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Created At Before",
         name: "created_at_before",
+        description:
+          "Inclusive upper bound on creation time. Use an ISO 8601 timestamp, preferably with Z or a UTC offset, e.g. 2026-09-09T12:00:00Z.",
         default: "",
         type: "string",
         routing: {
@@ -2681,6 +2733,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Created By",
         name: "created_by",
+        description: "Case-insensitive substring of the creator's name or email",
         default: "",
         type: "string",
         routing: {
@@ -2695,6 +2748,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Created By ID",
         name: "created_by_id",
+        description:
+          "The Dart user ID of the creator; accepts an ID, not a name or email. An empty string matches items with no creator.",
         default: "",
         type: "string",
         routing: {
@@ -2709,6 +2764,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Dartboard",
         name: "dartboard",
+        description:
+          "Dartboard title or full Space/Dartboard title, matched exactly ignoring case. Use the configuration response for available values.",
         default: "",
         type: "string",
         routing: {
@@ -2723,6 +2780,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Dartboard ID",
         name: "dartboard_id",
+        description: "The Dart ID of the dartboard to filter by; accepts an ID, not a title",
         default: "",
         type: "string",
         routing: {
@@ -2737,6 +2795,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Description",
         name: "description",
+        description:
+          "Case-insensitive substring of the stored task description, including rich-text formatting metadata",
         default: "",
         type: "string",
         routing: {
@@ -2751,6 +2811,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Due At",
         name: "due_at",
+        description:
+          "Exact due calendar date to match. Use YYYY-MM-DD, e.g. 2026-09-09. If a timestamp includes Z or an offset, its date is taken in America/Los_Angeles and may differ.",
         default: "",
         type: "string",
         routing: {
@@ -2765,6 +2827,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Due At After",
         name: "due_at_after",
+        description:
+          "Inclusive lower bound on due calendar date. Use YYYY-MM-DD, e.g. 2026-09-09. If a timestamp includes Z or an offset, its date is taken in America/Los_Angeles and may differ.",
         default: "",
         type: "string",
         routing: {
@@ -2779,6 +2843,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Due At Before",
         name: "due_at_before",
+        description:
+          "Inclusive upper bound on due calendar date. Use YYYY-MM-DD, e.g. 2026-09-09. If a timestamp includes Z or an offset, its date is taken in America/Los_Angeles and may differ.",
         default: "",
         type: "string",
         routing: {
@@ -2793,7 +2859,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "IDs",
         name: "ids",
-        description: "Filter by IDs",
+        description: "Comma-separated Dart IDs to include. Each ID is a 12-character alphanumeric string.",
         default: "",
         type: "string",
         routing: {
@@ -2808,6 +2874,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "In Trash",
         name: "in_trash",
+        description:
+          "Whether to return trashed items instead of non-trashed items. Defaults to false, even with no_defaults=true.",
         default: true,
         type: "boolean",
         routing: {
@@ -2822,6 +2890,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Is Completed",
         name: "is_completed",
+        description: "Whether to return tasks with a completed status; false returns tasks without one",
         default: true,
         type: "boolean",
         routing: {
@@ -2837,8 +2906,8 @@ export const properties: INodeProperties[] = [
         displayName: "No Defaults",
         name: "no_defaults",
         description:
-          "Whether default filters and sorting are applied when false (default) or no defaults are applied when true. Explicit filters or sorting always override defaults.",
-        default: false,
+          "Whether to skip workspace-specific default filters. Defaults to true. Default ordering and the exclusion of trashed items still apply; use o and in_trash to override them.",
+        default: true,
         type: "boolean",
         routing: {
           send: {
@@ -2868,6 +2937,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Parent ID",
         name: "parent_id",
+        description:
+          "The Dart ID of the parent task whose direct subtasks to return. An empty string matches tasks with no parent.",
         default: "",
         type: "string",
         routing: {
@@ -2882,6 +2953,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Priority",
         name: "priority",
+        description:
+          "Case-insensitive substring of a priority (Critical, High, Medium, or Low). An empty string matches tasks with no priority.",
         default: "",
         type: "string",
         routing: {
@@ -2896,6 +2969,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Reviewer",
         name: "reviewer",
+        description:
+          "Case-insensitive substring of the reviewer's name or email. An empty string matches items with no reviewer.",
         default: "",
         type: "string",
         routing: {
@@ -2910,6 +2985,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Reviewer ID",
         name: "reviewer_id",
+        description:
+          "The Dart user ID of the reviewer; accepts an ID, not a name or email. An empty string matches items with no reviewer.",
         default: "",
         type: "string",
         routing: {
@@ -2924,6 +3001,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Size",
         name: "size",
+        description: "Exact numeric task size, including the stored numeric value for T-shirt sizes",
         default: 0,
         type: "number",
         routing: {
@@ -2941,6 +3019,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Start At",
         name: "start_at",
+        description:
+          "Exact start calendar date to match. Use YYYY-MM-DD, e.g. 2026-09-09. If a timestamp includes Z or an offset, its date is taken in America/Los_Angeles and may differ.",
         default: "",
         type: "string",
         routing: {
@@ -2955,6 +3035,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Start At After",
         name: "start_at_after",
+        description:
+          "Inclusive lower bound on start calendar date. Use YYYY-MM-DD, e.g. 2026-09-09. If a timestamp includes Z or an offset, its date is taken in America/Los_Angeles and may differ.",
         default: "",
         type: "string",
         routing: {
@@ -2969,6 +3051,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Start At Before",
         name: "start_at_before",
+        description:
+          "Inclusive upper bound on start calendar date. Use YYYY-MM-DD, e.g. 2026-09-09. If a timestamp includes Z or an offset, its date is taken in America/Los_Angeles and may differ.",
         default: "",
         type: "string",
         routing: {
@@ -2983,6 +3067,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Status",
         name: "status",
+        description:
+          "Case-insensitive substring of the task status title. Use the configuration response for available statuses.",
         default: "",
         type: "string",
         routing: {
@@ -2997,6 +3083,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Status ID",
         name: "status_id",
+        description: "The Dart ID of the task status to filter by; accepts an ID, not a title",
         default: "",
         type: "string",
         routing: {
@@ -3011,6 +3098,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Tag",
         name: "tag",
+        description: "Case-insensitive substring of a tag title. An empty string matches tasks with no tags.",
         default: "",
         type: "string",
         routing: {
@@ -3025,6 +3113,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Tag ID",
         name: "tag_id",
+        description: "The Dart ID of a tag. An empty string matches tasks with no tags.",
         default: "",
         type: "string",
         routing: {
@@ -3039,6 +3128,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Title",
         name: "title",
+        description: "Case-insensitive substring of the title",
         default: "",
         type: "string",
         routing: {
@@ -3053,6 +3143,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Type",
         name: "type",
+        description:
+          "Case-insensitive substring of the task type title. Use the configuration response for available types.",
         default: "",
         type: "string",
         routing: {
@@ -3067,6 +3159,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Type ID",
         name: "type_id",
+        description: "The Dart ID of the task type to filter by; accepts an ID, not a title",
         default: "",
         type: "string",
         routing: {
@@ -3081,6 +3174,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Updated At",
         name: "updated_at",
+        description:
+          "Exact last update time to match. Use an ISO 8601 timestamp, preferably with Z or a UTC offset, e.g. 2026-09-09T12:00:00Z.",
         default: "",
         type: "string",
         routing: {
@@ -3095,6 +3190,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Updated At After",
         name: "updated_at_after",
+        description:
+          "Inclusive lower bound on last update time. Use an ISO 8601 timestamp, preferably with Z or a UTC offset, e.g. 2026-09-09T12:00:00Z.",
         default: "",
         type: "string",
         routing: {
@@ -3109,6 +3206,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Updated At Before",
         name: "updated_at_before",
+        description:
+          "Inclusive upper bound on last update time. Use an ISO 8601 timestamp, preferably with Z or a UTC offset, e.g. 2026-09-09T12:00:00Z.",
         default: "",
         type: "string",
         routing: {
@@ -3123,6 +3222,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Updated By",
         name: "updated_by",
+        description: "Case-insensitive substring of the last updater's name or email",
         default: "",
         type: "string",
         routing: {
@@ -3137,6 +3237,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "Updated By ID",
         name: "updated_by_id",
+        description:
+          "The Dart user ID of the last updater; accepts an ID, not a name or email. An empty string matches items with no last updater.",
         default: "",
         type: "string",
         routing: {
@@ -3151,6 +3253,8 @@ export const properties: INodeProperties[] = [
       {
         displayName: "View",
         name: "view",
+        description:
+          "Case-insensitive substring of a view title. Uses the first matching view; use the view ID filter for an unambiguous selection.",
         default: "",
         type: "string",
         routing: {
@@ -3165,6 +3269,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: "View ID",
         name: "view_id",
+        description: "The Dart ID of the view whose tasks to return; accepts an ID, not a title",
         default: "",
         type: "string",
         routing: {
@@ -3234,6 +3339,7 @@ export const properties: INodeProperties[] = [
     displayName: "ID",
     name: "id",
     required: true,
+    description: "The view's 12-character alphanumeric Dart ID; accepts an ID, not a title or URL",
     default: "",
     type: "string",
     displayOptions: {
