@@ -5,6 +5,7 @@
   - [Sync API](#sync-api)
   - [Deploy](#deploy)
   - [Dependency updating](#dependency-updating)
+  - [Dependency patches](#dependency-patches)
 
 ## Local setup
 
@@ -28,3 +29,7 @@
 
 1. Run `bun run req-up-all` and select everything to update all FE dependencies
 2. Run `bun install`
+
+## Dependency patches
+
+- [`@n8n/node-cli`](../patches/@n8n%252Fnode-cli@0.52.4.patch): Add Bun detection and command execution for lint, build, dev, and release because the upstream CLI lacks Bun support.
